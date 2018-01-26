@@ -16,6 +16,7 @@ aside.main-sidebar
           span Đơn hàng
           i.fa.fa-angle-left.pull-right
         ul.treeview-menu
+        ul.treeview-menu
           - var liClass = (childMenu == 'new' ? 'active' : '');
           li
             a(href='/admin/order?order_status=new' class=liClass)
@@ -63,14 +64,6 @@ aside.main-sidebar
           li
             a(href='/admin/collection' class=liClass)
               | Nhóm sản phẩm
-          - var liClass = (childMenu == 'product_buy_together' ? 'active' : '');
-          //li
-          //  a(href='/admin/product_buy_together' class=liClass)
-          //    | Sản phẩm mua kèm
-          //- - var liClass = (childMenu == 'product_buy_together' ? 'active' : '');
-          //- li
-          //-   a(href='/admin/product_buy_together' class=liClass)
-          //-     | Sản phẩm mua kèm
           - var liClass = (childMenu == 'attribute' ? 'active' : '');
           li
             a(href='/admin/attribute' class=liClass)
@@ -101,7 +94,6 @@ aside.main-sidebar
           li
             a(href='/admin/customer' class=liClass)
               | Danh sách
-
       - var itemClass = (menu == 'article' ? 'active' : '');
       li.treeview(class=itemClass)
         a.main-item(class=itemClass)
@@ -136,26 +128,18 @@ aside.main-sidebar
           span Bình luận
           i.fa.fa-angle-left.pull-right
         ul.treeview-menu
-          //- var liClass = (childMenu == 'comment_new' ? 'active' : '');
-          //  li
-          //    a(href="/admin/article" class=liClass)
-          //      | Mới
-          //- var liClass = (childMenu == '' ? 'active' : '');
-          //  li
-          //    a(href="/admin/article/" class=liClass)
-          //      | Chưa phản hồi
           - var liClass = (childMenu == 'comment_product' ? 'active' : '');
-            li
-              a(href="/admin/comment/product" class=liClass)
-                | Thuộc sản phẩm
+          li
+            a(href="/admin/comment/product" class=liClass)
+              | Thuộc sản phẩm
           - var liClass = (childMenu == 'comment_article' ? 'active' : '');
-            li
-              a(href="/admin/comment/article" class=liClass)
-                | Thuộc bài viết
+          li
+            a(href="/admin/comment/article" class=liClass)
+              | Thuộc bài viết
           - var liClass = (childMenu == 'comment_all' ? 'active' : '');
-            li
-              a(href="/admin/comment" class=liClass)
-                | Tất cả
+          li
+            a(href="/admin/comment" class=liClass)
+              | Tất cả
       - var itemClass = (menu == 'contact' ? 'active' : '');
       li.treeview(class=itemClass)
         a.main-item(class=itemClass)
@@ -164,17 +148,17 @@ aside.main-sidebar
           i.fa.fa-angle-left.pull-right
         ul.treeview-menu
           - var liClass = (childMenu == 'contact_read' ? 'active' : '');
-            li
-              a(href="/admin/contact/get?read=1" class=liClass)
-                | Mới
+          li
+            a(href="/admin/contact/get?read=1" class=liClass)
+              | Mới
           - var liClass = (childMenu == 'contact_reply' ? 'active' : '');
-            li
-              a(href="/admin/contact/get?reply=1" class=liClass)
-                | Chưa phản hồi
+          li
+            a(href="/admin/contact/get?reply=1" class=liClass)
+              | Chưa phản hồi
           - var liClass = (childMenu == 'contact_all' ? 'active' : '');
-            li
-              a(href="/admin/contact" class=liClass)
-                | Tất cả
+          li
+            a(href="/admin/contact" class=liClass)
+              | Tất cả
       - var itemClass = (menu == 'slider' ? 'active' : '');
       li.treeview(class=itemClass)
         a.main-item(class=itemClass)
@@ -183,18 +167,18 @@ aside.main-sidebar
           i.fa.fa-angle-left.pull-right
         ul.treeview-menu
           - var liClass = (childMenu == 'slider_create' ? 'active' : '');
-            li
-              a(href='/admin/slider/create' class=liClass)
-                | Slider mới
+          li
+            a(href='/admin/slider/create' class=liClass)
+              | Slider mới
           - var liClass = (childMenu == 'slider' ? 'active' : '');
-            li
-              a(href='/admin/slider' class=liClass)
-                | Danh sách
+          li
+            a(href='/admin/slider' class=liClass)
+              | Danh sách
       - var itemClass = (menu == 'location' ? 'active' : '');
-        li.treeview(class=itemClass)
-          a.main-item(href='/admin/location' class=itemClass)
-            i.fa.fa-cog
-            span Điểm bán
+      li.treeview
+        a(href="/admin/location" class=itemClass)
+          i.fa.fa-tachometer
+          span Điểm bán
       - var itemClass = (menu == 'setting' ? 'active' : '');
       li.treeview(class=itemClass)
         a.main-item(class=itemClass)
@@ -210,18 +194,10 @@ aside.main-sidebar
           li
             a(href='/admin/menu' class=liClass)
               | Menu
-          //- var liClass = (childMenu == 'slider' ? 'active' : '');
-          //li
-          //  a(href='/admin/slider' class=liClass)
-          //    | Slider
           - var liClass = (childMenu == 'shipping_fee' ? 'active' : '');
           li
             a(href='/admin/shipping_fee' class=liClass)
               | Phí giao hàng
-          //- - var liClass = (childMenu == 'image' ? 'active' : '');
-          //- li
-          //-   a(href='/admin/images' class=liClass)
-          //-     | Hình ảnh
       - var itemClass = (menu == 'user' ? 'active' : '');
       li.treeview(class=itemClass)
         a.main-item(class=itemClass)
