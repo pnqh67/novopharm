@@ -1,0 +1,123 @@
+extends ./layout.pug
+
+block pre-include
+  - var menu = 'user';
+  - var childMenu = 'history';
+  title Lịch sử hoạt động
+
+block post-include
+  script(src=staticURI() +'/js/admin/user.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Quản trị viên
+      li
+        a Lịch sử hoạt động
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      span.middle-inline-block
+      li
+        a.btn.btn-default(data-toggle="modal" data-target="#modal-add") Thêm nhân viên
+  section.content
+    .box
+      .box-body
+        table.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
+          thead
+            tr
+              th Họ tên
+              th Email
+              th Số điện thoại
+              th Phân quyền
+              th Chỉnh sửa
+          tbody
+            each item in user
+              unless item.role == 'super'
+                tr
+                  td=item.name
+                  td=item.email
+                  td=item.phone
+                  td
+                    if item.role == 'admin'
+                      label.label.label-success Administrator
+                    else
+                      label.label.label-info User
+                  td
+                    a.btn-edit.btn-edit-user(data-id=item.id)
+                      i.fa.fa-pencil-square-o
+                    if item.email != login_email
+                      a.btn-remove(data-id=item.id)
+                        i.fa.fa-trash
+      #modal-add.modal.fade(role='dialog')
+        .modal-dialog
+          form.modal-content.form-add-user
+            .modal-header
+              button.close(type='button', data-dismiss='modal') ×
+              h4.modal-title Thêm người dùng
+            .modal-body.clearfix
+              .form-horizontal
+                .box-body
+                  .form-group
+                    label.col-sm-2.control-label Họ tên
+                      strong.required  *
+                    .col-sm-10
+                      input.form-control(type="text", name="name", placeholder="Bony", required)
+                  .form-group
+                    label.col-sm-2.control-label Email
+                      strong.required  *
+                    .col-sm-10
+                      input.form-control(type="email", name="email", placeholder="example@gmail.com", required)
+                  .form-group
+                    label.col-sm-2.control-label Số điện thoại
+                    .col-sm-10
+                      input.form-control(type="text", name="phone", placeholder="0123456789")
+                  .form-group
+                    label.col-sm-2.text-center.pd-0 Phân quyền
+                      strong.required  *
+                    .col-sm-10
+                      select.form-control(name="role")
+                        option(value="admin") Administrator
+                        option(value="user") User
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Đóng
+              button.btn.btn-admin(type='submit')
+                i.fa.fa-floppy-o
+                i.fa.fa-circle-o-notch.fa-spin
+                | Đồng ý
+                
+      #modal-edit.modal.fade(role='dialog')
+        .modal-dialog
+          form.modal-content.form-edit-user
+            .modal-header
+              button.close(type='button', data-dismiss='modal') ×
+              h4.modal-title Cập nhật thông tin
+            .modal-body.clearfix
+              .form-horizontal
+                .box-body
+                  .form-group
+                    label.col-sm-2.control-label Họ tên
+                      strong.required  *
+                    .col-sm-10
+                      input.form-control(type="text", name="name", placeholder="Bony" required)
+                  .form-group
+                    label.col-sm-2.control-label Email
+                      strong.required  *
+                    .col-sm-10
+                      input.form-control(type="email", name="email", placeholder="example@gmail.com" required)
+                  .form-group
+                    label.col-sm-2.control-label Số điện thoại
+                    .col-sm-10
+                      input.form-control(type="text", name="phone", placeholder="0123456789")
+                  .form-group
+                    label.col-sm-2.text-center.pd-0 Phân quyền
+                      strong.required  *
+                    .col-sm-10
+                      select.form-control(name="role")
+                        option(value="admin") Administrator
+                        option(value="user") User
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+              button.btn.btn-admin(type='submit')
+                i.fa.fa-floppy-o
+                i.fa.fa-circle-o-notch.fa-spin
+                | Đồng ý

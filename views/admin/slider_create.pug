@@ -1,0 +1,85 @@
+extends ./layout.pug
+block pre-include
+  - var menu = 'slider'
+  - var childMenu = 'slider_create'
+  title Tạo Slider
+
+block post-include
+  script(src=staticURI() + '/js/admin/slider.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Slider
+      li
+        a Thêm mới
+
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      li
+        a.btn.btn-admin.btn-create.btn-create-update
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Lưu lại
+  section.content
+    .row
+      .col-sm-9.col-xs-12.box-left
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-6.title THÔNG TIN
+              ul.nav.nav-tabs.nav-tabs-lang.col-xs-6
+                li.active
+                  a(data-toggle='tab', href='#tab-vi') Tiếng Việt
+                li
+                  a(data-toggle='tab', href='#tab-en') Tiếng Anh
+            .box-body
+              .tab-content
+                #tab-vi.tab-pane.fade.in.active
+                  .form-group
+                    .col-sm-2.control-label Tiêu đề
+                      strong.required  *
+                    .col-sm-10
+                      input.form-control(name="title", placeholder="Tiêu đề")
+                  .form-group
+                    .col-sm-2.control-label Mô tả
+                    .col-sm-10
+                      textarea.form-control(name='description')#description
+                #tab-en.tab-pane.fade.in
+                  .form-group
+                    .col-sm-2.control-label Tiêu đề
+                    .col-sm-10
+                      input.form-control(name="title_en", placeholder="Tiêu đề")
+                  .form-group
+                    .col-sm-2.control-label Mô tả
+                    .col-sm-10
+                      textarea.form-control(name='description_en')#description_en
+      .col-sm-3.col-xs-12.box-right
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-12.title SLIDER CHA
+            .box-body
+              select.form-control(name="parent_id")
+                option(value="-1" data-parentid=-1) Tạo mới Slider
+                each item in data
+                  option(value=item.id data-parentid=item.parent_id)=item.title
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-12.title HÌNH ẢNH
+            .box-body
+              .col-xs-12
+                .form-group
+                  form.col-sm-12.form-upload-image
+                    img(src=staticURI() + "/img/default_image.png")
+                    input.upload.form-control(type="file" name="upload[]" disabled)
+                    input(type="hidden" name="image")
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-12.title LINK
+            .box-body
+              .col-xs-12
+                .form-group
+                  input.form-control(type="text" name="link" placeholder="Link")

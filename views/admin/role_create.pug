@@ -1,0 +1,43 @@
+extends ./layout.pug
+
+block pre-include
+  title Tạo phân quyền
+  - var menu = 'user'
+  - var childMenu = 'role'
+block post-include
+  script(src=staticURI() + '/js/admin/role.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Quản trị viên
+      li
+        a(href='/admin/role') Phân quyền
+      li
+        a Tạo mới
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      li
+        a.btn.btn-admin.btn-create-update-role
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Lưu lại
+  section.content
+    .box
+      .form-horizontal
+        .box-title.clearfix
+          .col-xs-6.title THÔNG TIN
+        .box-body
+          .form-group
+            .col-sm-2.control-label Tên phân quyền
+              strong.required  *
+            .col-sm-10
+              input.title.form-control(name="title", placeholder="Tên phân quyền")
+    .box.permission
+      .form-horizontal
+        .box-title.clearfix
+          .col-xs-6.title PHÂN QUYỀN
+        .box-body
+          each item in ['order', 'product', 'collection', 'attribute', 'coupon', 'sale', 'customer', 'article', 'blog', 'page', 'comment', 'contact', 'menu', 'slider', 'shipping_fee', 'user', 'permission']
+            .col-md-4.col-sm-6.col-xs-12.box-tree(data-item=item)
+              .tree

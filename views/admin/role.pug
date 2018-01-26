@@ -1,0 +1,41 @@
+extends ./layout.pug
+block pre-include
+  title Phân quyền
+  - var menu = 'user';
+  - var childMenu = 'role';
+
+block post-include
+  script(src=staticURI() + '/js/admin/role.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Quản trị viên
+      li
+        a Phân quyền
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      li
+        a.btn.btn-admin(href="/admin/role/create") Thêm phân quyền
+
+  section.content
+    .box
+      .box-body.clearfix
+        table.table.table-bordered.table-striped.nowrap(cellspacing="0" width="100%")
+          thead
+            tr
+              td Mã
+              td Tên phân quyền
+              td Chỉnh sửa
+          tbody
+            each item in data
+              tr
+                td
+                  a(href="/admin/role/" + item.id, target="_blank")=item.id
+                td
+                  a(href="/admin/role/" + item.id, target="_blank")=item.title
+                td
+                  a.btn-edit(href="/admin/role/" + item.id, data-id=item.id, title="Chỉnh sửa")
+                    i.fa.fa-pencil-square-o
+                  a.btn-remove(data-id=item.id, title="Xóa")
+                    i.fa.fa-trash

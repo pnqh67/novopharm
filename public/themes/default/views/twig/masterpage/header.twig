@@ -1,0 +1,66 @@
+<div class="header">
+  <div class="container top-header" style="">
+    <div class="logo text-center pull-left">
+      <a class="box-img" href="/">
+        <img src="/uploads/{{('logo')|getMeta}}" alt="logo">
+      </a>
+    </div>
+    <div class="right pull-right">
+      <a class="btn-order-header pull-right" href="#">Đặt hàng</a>
+      <div class="box-icon-social pull-right">
+        <a href="{{ ('facebook_url')|getMeta }}" target="_blank" title="Facebook">
+          <img src="{{ themeURI() }}/core/images/icons/social/facebook.svg" alt="">
+        </a>
+        <a href="{{ ('google_plus_url')|getMeta }}" target="_blank" title="Google Plus">
+          <img src="{{ themeURI() }}/core/images/icons/social/google-plus.svg" alt="">
+        </a>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="clearnfix"></div>
+  </div>
+
+
+  <!-- BEGIN Menu Home -->
+  <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="110">
+    <div class="container">
+      <div class="row">
+        <div class="text-main hidden-sm visible-xs pull-left">
+          <p><span>NOVOTHYM</span>-Giúp con giảm lệ thuộc kháng sinh</p>
+        </div>
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        {% set menus = "menu" | getMenu %}
+        {% if menus | countArr %}
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav nav-left">
+            {% for item in menus %}
+              <li>
+                <a href="{{ item.link }}" title="{{ item.title }}">{{ item.title }}</a>
+              </li>
+            {% endfor %}
+            <!-- <li class="active">
+              <a href="index.html">NOVOTHYM</a>
+            </li>
+            <li><a href="category.html">Bệnh hô hấp</a></li>
+            <li><a href="chitietdiemban.html">Sử dụng kháng sinh khoa học</a></li>
+            <li><a href="experience.html">Kinh nghiệm sử dụng</a></li>
+            <li><a href="diemban.html">Điểm bán</a></li> -->
+          </ul>
+        </div><!-- /.navbar-collapse -->
+        {% endif %}
+
+      </div>
+    </div><!-- /.container-fluid -->
+  </nav>
+  <!-- END Menu Home -->
+</div>

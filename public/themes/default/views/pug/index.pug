@@ -1,0 +1,34 @@
+extends ./layout.pug
+
+block pre-include
+  title=title
+  - var canonical = canonical(page_number, total_pages);
+  | !{canonical}
+  - metaTitle = title
+  if meta_description_default
+    - metaDescription = meta_description_default
+block post-include
+  link(rel='stylesheet', href=themeURI() + '/libs/owl.carousel.min.css')
+  script(src=themeURI() + '/libs/owl.carousel.min.js')
+  
+block content
+  .homepage
+    .container.slider-homepage
+      .index-slider-carousel.owl-carousel
+        - var slider = slider();
+        each item in slider
+          .item
+            a(href=item.link)
+              img(src='/uploads/' + item.image, alt=item.title, title=item.title)
+    .container.category
+      - var collectionIndex = collectionIndex();
+      if countArr(collectionIndex)
+        each item in collectionIndex
+          .collection-group.clearfix
+            .collection-title
+              span=item.title
+            .list-product-index.clearfix
+              .row
+                each product in item.products
+                  .col20.col-xs-6
+                    include snippet/product-loop

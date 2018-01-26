@@ -1,0 +1,61 @@
+extends ./layout.pug
+
+block pre-include
+  - var menu = 'customer';
+  - var childMenu = 'list';
+  title Danh sách khách hàng
+block post-include
+  script.
+    initDataTable('table');
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Khách hàng
+      li
+        a Danh sách khách hàng
+    //- ol.button-right.col-md-4.col-sm-5.col-xs-12
+    //-   li
+    //-     a.btn.btn-review(href="/admin/customer/export")
+    //-       i.fa.fa-download
+    //-       b Export
+  section.content
+    .box.box-table
+      .row.box-header
+        h3.box-title DANH SÁCH
+      .box-body
+        table.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
+          .action-box.hidden
+            .dropdown
+              button.btn.btn-danger.dropdown-toggle(type="button" data-toggle="dropdown")
+                i.fa.fa-share
+                |  Chọn thao tác (đang chọn
+                span.num-select
+                |  khách hàng)
+                span.caret
+              ul.dropdown-menu
+                li
+                  a.status-active(data-value='active') Ẩn
+                li
+                  a.status-inactive(data-value='inactive') Hiện
+                li
+                  a.status-delete(data-value='delete') Xóa
+          thead
+            tr
+              th.text-center
+                input.select-all(type="checkbox" style="margin-left: 15px")
+              th Họ tên
+              th Số điện thoại
+              th Email
+              th Tỉnh thành
+          tbody
+            each item in customers
+              tr
+                td.text-center
+                  input.checkboxes(type="checkbox" value=item.id)
+                td
+                  a(href="/admin/customer/" + item.id + "/order" target="_blank")=item.name
+                td=item.phone
+                td=item.email
+                td=item.region

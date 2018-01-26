@@ -1,0 +1,55 @@
+{% extends "layout.twig" %}
+
+{% block pre_include %}
+    <title>{{ title }}</title>
+    {% if fb_image %}
+    {% set ogImage = fb_image %}
+    {% endif %}
+    {% if blog.meta_description %}
+    {% set metaDescription = blog.meta_description %}
+    {% endif %}
+    {% if blog.meta_robots %}
+    {% set meta_robots = blog.meta_robots %}
+    {% endif %}
+    {% set metaTitle = blog.title %}
+{% endblock pre_include %}
+
+{% block post_include %}
+{% endblock post_include %}
+
+
+{% block content %}
+<!-- BEGIN main-wrapper -->
+<div class="main-wrapper main-wrapper2 container">
+    <div class="bg-main">
+        <section class="category-wrapper">
+            <section class="section1">
+                <h2 class="title text-center">{{ title }}</h2>
+                {% if blogs|countArr %}
+                    <div class="grid-category">
+                    {% for item in blogs %}
+                        <div class="col-md-4 col-sm-4 col-xs-12 block">
+                            <div class="item">
+                                <div class="title-cate box-title-s1 text-center">
+                                    <h3><a href="/nhom-bai-viet/{{ item.handle }}" title="{{ item.title }}">{{ item.title }}</a></h3>
+                                </div>
+                                    <a class="box-img" href="/nhom-bai-viet/{{ item.handle }}" title="{{ item.title }}">
+                                        <img src="/uploads/{{ item.image }}" alt="{{ item.title }}">
+                                    </a>   
+                                <div class="box-btn-s1 text-center">
+                                    <a href="/nhom-bai-viet/{{ item.handle }}" class="view-more">TÌM HIỂU THÊM</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+                <div class="clearfix"></div>
+            </section>
+        </section>
+    </div>
+</div>
+
+
+<!-- END main-wrapper -->
+{% endblock content %}

@@ -1,0 +1,222 @@
+{% extends "layout.twig" %}
+
+{% block pre_include %}
+  <title>Điểm bán</title>
+{% endblock pre_include %}
+
+{% block content %}
+<!-- BEGIN main-wrapper -->
+<div class="main-wrapper main-wrapper2 container">
+  <div class="bg-main">
+    <section class="diemban-wrapper">
+      <h2 class="title-diemban">Bạn ấn vào tỉnh của mình để xem nhà thuốc gần nhất nhé !</h2>
+      <div id="diemban-pc">
+        {% if regions|countArr %}
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            {% if regions['north']|countArr %}
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                  <h4 class="panel-title">
+                    <a class="add-add" role="button" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      MIỀN BẮC
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                  <div class="panel-body">
+                    <div class="left col-sm-6 col-xs-12">
+                      <p class="title-tp text-center">Tỉnh / thành phố </p>
+                      <ul class="row">
+                        {% for item in regions['north'] %}
+                          <li class="col-xs-6">
+                            <a class="{{ loop.index == 1 ? 'active' : null }} region-item" href="javascript:;" data-id="{{ item.id }}">{{item.name}}</a>
+                          </li>
+                          {% if loop.index % 2 == 0 %}
+                            <div class="clearfix"></div>
+                          {% endif %}
+                        {% endfor %}
+                      </ul>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="right col-sm-6 col-xs-12">
+                      <p class="title-tp text-center">Quận / huyện </p>
+                      <ul class="row subregion-wrapper">
+                        {% for item in subregionsFirst %}
+                          <li class="col-xs-6">
+                            <a class="" href="diem-ban/chi-tiet?subregion={{item.id}}">{{item.name}}</a>
+                          </li>
+                          {% if loop.index % 2 == 0 %}
+                            <div class="clearfix"></div>
+                          {% endif %}
+                        {% endfor %}
+                      </ul>
+                      <div class="clearfix"></div>
+                    </div>       
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            {% if regions['mid']|countArr %}
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                  <h4 class="panel-title">
+                    <a class="collapsed add-add" role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      MIỀN TRUNG
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                  <div class="panel-body">
+                    <div class="left col-sm-6 col-xs-12">
+                      <p class="title-tp text-center">Tỉnh / thành phố </p>
+                      <ul class="row">
+                        {% for item in regions['mid'] %}
+                          <li class="col-xs-6">
+                            <a  class="region-item" href="javascript:;" data-id="{{ item.id }}">{{item.name}}</a>
+                          </li>
+                          {% if loop.index % 2 == 0 %}
+                            <div class="clearfix"></div>
+                          {% endif %}
+                        {% endfor %}
+                      </ul>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="right col-sm-6 col-xs-12">
+                      <p class="title-tp text-center">Quận / huyện </p>
+                      <ul class="row subregion-wrapper">
+                        
+                      </ul>
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            {% if regions['south']|countArr %}
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingThree">
+                  <h4 class="panel-title">
+                    <a class="collapsed add-add" role="button" data-toggle="collapse" data-parent="#accordion3" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      MIỀN NAM
+
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                  <div class="panel-body">
+                    <div class="left col-sm-6 col-xs-12">
+                      <p class="title-tp text-center">Tỉnh / thành phố </p>
+                      <ul class="row">
+                          {% for item in regions['south'] %}
+                            <li class="col-xs-6">
+                              <a class="region-item" href="javascript:;" data-id="{{ item.id }}">{{item.name}}</a>
+                            </li>
+                            {% if loop.index % 2 == 0 %}
+                              <div class="clearfix"></div>
+                            {% endif %}
+                          {% endfor %}
+                        </ul>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="right col-sm-6 col-xs-12">
+                      <p class="title-tp text-center">Quận / huyện </p>
+                      <ul class="row subregion-wrapper">
+                        
+                      </ul>
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+        
+        <div class="box-content">  
+          <p>Nếu bạn không tìm được điểm bán thuận tiện, hãy gọi hotline (miễn cước)<strong> <a href="tel:{{('hotline_2')|getMeta}}"></a>{{('hotline_2')|getMeta}}</strong> để được hướng dẫn nhé.</p>
+          <br>
+          <p>
+            <span style="background: none 0px 0px repeat scroll #00aae5; border-radius: 5px; color: #ffffff; padding: 5px 10px; ">
+              <strong>Cách 2&nbsp;</strong>
+            </span> 
+            Đặt mua qua điện thoại:
+          </p>
+          <p>
+            Bạn vui lòng gọi vào số 
+            <strong>
+              <a style="text-decoration: none;color: #00aae5" href="tel:{{('hotline_1')|getMeta}} ">
+              <span style="font-size:20px;">{{('hotline_1')|getMeta}}</span></a>
+            </strong> 
+            để được Dược sĩ tư vấn và đặt hàng.
+          </p>
+
+        </div>
+
+        <section class="section3">
+          <div class="box-content">
+            <div class="box-title-s3">
+              <h2 class="title text-center">Đặt hàng ngay<span></span></h2>
+            </div>
+            <div class="content-s3">
+              <form class="form-order">
+                <div class="form-row">
+                  <input type="text" class="hidden product_price" value="{{ ('product_price')|getMeta }}">
+                  <div class="form-group col-md-6">
+                    <label><span class="star">*</span> Số lượng</label>
+                    <div class="input-group">
+                      <span class="input-group-btn box-btn-minus">
+                        <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quantity">
+                          <i class="fa fa-minus" aria-hidden="true"></i>
+                        </button>
+                      </span>
+                      <input class="input-number" type="text" name="quantity" class="form-control input-number" value="1" min="1" max="1000">
+                      <span class="input-group-btn box-btn-plus">
+                        <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quantity">
+                          <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label><span class="star">*</span> Họ tên</label>
+                    <input type="text" class="form-control" name="name">
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="email" >
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label><span class="star">*</span> Số điện thoại</label>
+                    <input type="text" class="form-control" name="phone">
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-group">
+                  <label><span class="star">*</span> Địa chỉ</label>
+                  <textarea class="form-control" rows="4" id="comment" name="address"></textarea>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group col-md-8 col-sm-12 text-center">
+                    <h4 class="total-amount">Tổng tiền: <span class="text">{{ ('product_price')|getMeta }}</span> VNĐ</h4>
+                    <input type="text" name="total" class="hidden total_amount" value="{{ ('product_price')|getMeta }}">
+                    <p class="color-0 text-left note">Lưu ý: Chi phí trên chưa bao gồm phí vận chuyển</p>
+                  </div>
+                  <div class="form-group col-md-4 col-sm-12 text-center">
+                    <button class="btn-submit btn btn-default pull-right btn-order">Đặt hàng</button>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </form>
+            </div>
+          </div>
+
+        </section>
+      </section>
+  </div>
+</div>
+<!-- END main-wrapper -->
+{% endblock content %}

@@ -1,0 +1,48 @@
+extends ./layout.pug
+
+block pre-include
+  title Thêm màu sắc
+  - var menu = 'product'
+  - var childMenu = 'color'
+block post-include
+  script(src=staticURI() + '/js/admin/color.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Sản phẩm
+      li
+        a(href='/admin/color') Màu sắc
+      li
+        a Tạo mới
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      li
+        a.btn.btn-admin.btn-create-update
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Lưu lại
+  section.content
+    .row
+      .col-xs-12
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-6.title THÔNG TIN
+            .box-body
+              .tab-content
+                #tab-vi.tab-pane.fade.in.active
+                  .form-group
+                    label.col-sm-2.control-label.pd-left-0 Tên (vi)
+                      strong.required  *
+                    .col-sm-10
+                      input.form-control(name="name", placeholder="Vàng")
+                  .form-group
+                    label.col-sm-2.control-label.pd-left-0 Tên (en)
+                    .col-sm-10
+                      input.form-control(name="name_en", placeholder="Yellow")
+                  .form-group
+                    label.col-sm-2.control-label.pd-left-0 Mã hex
+                      strong.required  *
+                    .col-sm-10
+                      input.form-control(name="hex", type="color", style="width: 50px;")

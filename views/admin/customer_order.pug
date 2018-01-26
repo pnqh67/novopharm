@@ -1,0 +1,68 @@
+extends ./layout.pug
+
+block pre-include
+  title Khách hàng 
+    =customer_name
+  - var menu = 'customer';
+  - var childMenu = 'customer';
+block post-include
+  script.
+    initDataTable('table');
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Khách hàng
+      li
+        a=customer_name
+  section.content
+    .box.box-table
+      .row.box-header
+        h3.box-title DANH SÁCH
+      .box-body
+        table.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
+          .action-box.hidden
+            .dropdown
+              button.btn.btn-danger.dropdown-toggle(type="button" data-toggle="dropdown")
+                i.fa.fa-share
+                |  Chọn thao tác (đang chọn
+                span.num-select
+                |  đơn hàng)
+                span.caret
+              ul.dropdown-menu
+                li
+                  a.status-active(data-value='active') Ẩn
+                li
+                  a.status-inactive(data-value='inactive') Hiện
+                li
+                  a.status-delete(data-value='delete') Xóa
+          thead
+            tr
+              th.text-center
+                input.select-all(type="checkbox" style="margin-left: 15px")
+              th Mã đơn hàng
+              th Ngày đặt hàng
+              th Trạng thái
+              th Tổng tiền
+          tbody
+            each item in data
+              tr
+                td.text-center
+                  input.checkboxes(type="checkbox" value=item.id)
+                td
+                  a(href="/admin/order/" + item.id target="_blank")=item.id
+                td=datetime(item.created_at)
+                td
+                  case item.order_status
+                    when 'new'
+                      label.label.label-info Mới
+                    when 'confirm'
+                      label.label.label-primary Xác nhận
+                    when 'done'
+                      label.label.label-success Hoàn thành
+                    when 'cancel'
+                      label.label.label-danger Hủy
+                    when 'return'
+                      label.label.label-danger Hoàn trả
+                td=money(item.total)

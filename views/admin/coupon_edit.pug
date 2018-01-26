@@ -1,0 +1,134 @@
+extends ./layout.pug
+block pre-include
+  - var menu = 'coupon'
+  - var childMenu = 'coupon'
+  title Chỉnh sửa mã giảm giá
+
+block post-include
+  script(src=staticURI() + '/js/admin/coupon.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Mã giảm giá
+      li
+        a=data.title
+
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      li
+        a.btn.btn-admin.btn-create.btn-create-update(data-id=data.id)
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Cập nhật
+  section.content
+    .row
+      .col-sm-9.col-xs-12.box-left
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-6.title THÔNG TIN
+              ul.nav.nav-tabs.nav-tabs-lang.col-xs-6
+                li.active
+                  a(data-toggle='tab', href='#tab-vi') Tiếng Việt
+                li
+                  a(data-toggle='tab', href='#tab-en') Tiếng Anh
+            .box-body
+              .tab-content
+                #tab-vi.tab-pane.fade.in.active
+                  .form-group
+                    .col-sm-2.control-label Tiêu đề
+                      strong.required  *
+                    .col-sm-10
+                      input.form-control(name="title", placeholder="Tiêu đề", value=data.title)
+                  .form-group
+                    .col-sm-2.control-label Mô tả
+                    .col-sm-10
+                      textarea.form-control#description(name='description')=data.description
+                #tab-en.tab-pane.fade.in
+                  .form-group
+                    .col-sm-2.control-label Tiêu đề
+                    .col-sm-10
+                      input.form-control(name="title_en", placeholder="Tiêu đề", value=data.title_en)
+                  .form-group
+                    .col-sm-2.control-label Mô tả
+                    .col-sm-10
+                      textarea.form-control#description_en(name='description_en')=data.description_en
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-12.title ĐIỀU KIỆN SỬ DỤNG
+            .box-body
+              .tab-content
+                .form-group
+                  .col-sm-2.control-label.pd0 Đơn hàng tối thiểu
+                    strong.required *
+                  .col-sm-10
+                    input.form-control(type="number", name='min_value_order' placeholder="Giá trị đơn hàng tối thiểu", value=data.min_value_order)
+                .form-group
+                  .col-sm-2.control-label.pd0 Từ ngày
+                    strong.required *
+                  .col-sm-10
+                    .input-group
+                      input.form-control.datepicker(name='start_date', placeholder="dd-mm-yyyy", value=ymd2dmy(data.start_date))
+                      span.input-group-addon.between-datetime đến ngày
+                        strong.required *
+                      input.form-control.datepicker(name='end_date', placeholder="dd-mm-yyyy", value=ymd2dmy(data.end_date))
+      .col-sm-3.col-xs-12.box-right
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-12.title MÃ GIẢM GIÁ
+            .box-body
+              .col-xs-12
+                .form-group
+                  .text-title Mã giảm giá
+                    strong.required *
+                  input.form-control(name="code" placeholder="Mã", value=data.code)
+                .form-group
+                  .text-title Đã sử dụng: 
+                    b=data.usage_count + '/lần'
+                .form-group
+                  .text-title Số lần sử dụng còn lại
+                    strong.required *
+                  input.form-control(name="usage_left" placeholder="Số lượng", type="number", value=data.usage_left)
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-12.title THỂ LOẠI & GIÁ TRỊ
+            .box-body
+              .col-xs-12
+                .form-group
+                  .text-title Thể loại
+                    strong.required *
+                  select.form-control(name="type", data-value=data.type)
+                    option(value="value") Giảm theo đơn giá
+                    option(value="percent") Giảm theo phần trăm
+                .form-group
+                  .text-title Giá trị
+                    strong.required *
+                  input.form-control(type="number", name="value" placeholder="Giá trị", value=data.value)
+                if (data.type == 'percent')
+                  .form-group.max-value-percent
+                    .text-title Giá trị tối đa
+                      strong.required *
+                    input.form-control(name="max_value_percent" placeholder="Giá trị tối đa", type="number" value=data.max_value_percent)
+                else
+                  .form-group.max-value-percent.hidden
+                    .text-title Giá trị tối đa
+                      strong.required *
+                    input.form-control(name="max_value_percent" placeholder="Giá trị tối đa", type="number")
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-12.title TRẠNG THÁI
+            .box-body
+              if data.status == 'expried'
+                select.form-control(name="status")
+                  option(value="active" disabled) Hiển thị
+                  option(value="inactive" disabled) Ẩn
+                  option(value="expried" selected) Hết hạn
+              else
+                select.form-control(name="status", data-value=data.status)
+                  option(value="active") Hiển thị
+                  option(value="inactive") Ẩn

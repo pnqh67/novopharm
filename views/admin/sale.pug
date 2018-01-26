@@ -1,0 +1,82 @@
+extends ./layout.pug
+block pre-include
+  title Chương trình khuyến mãi
+  - var menu = 'coupon';
+  - var childMenu = 'sale';
+
+block post-include
+  script(src=staticURI() + '/js/admin/sale.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Chương trình khuyến mãi
+      li
+        a Danh sách
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      li
+        a.btn.btn-admin(href="/admin/sale/create") Tạo chương trình khuyến mãi
+
+  section.content
+    .box.box-table
+      .row.box-header
+        h3.box-title DANH SÁCH
+      .box-body.clearfix
+        table.table.table-bordered.table-striped.nowrap(cellspacing="0" width="100%")
+          .action-box.hidden
+            .dropdown
+              button.btn.btn-danger.dropdown-toggle(type="button" data-toggle="dropdown")
+                i.fa.fa-share
+                |  Chọn thao tác (đang chọn
+                span.num-select
+                |  chương trình khuyến mãi)
+                span.caret
+              ul.dropdown-menu
+                li
+                  a.status-active(data-value='active') Ẩn
+                li
+                  a.status-inactive(data-value='inactive') Hiện
+                li
+                  a.status-delete(data-value='delete') Xóa
+          thead
+            tr
+              th.text-center
+                input.select-all(type="checkbox")
+              th Mã
+              th Tên chương trình
+              th Loại
+              th Giá trị
+              th Ngày bắt đầu
+              th Ngày kết thúc
+              th Trạng thái
+          tbody
+            each item in data
+              tr
+                td.text-center
+                  input.checkboxes(type="checkbox" value=item.id)
+                td=item.id
+                td
+                  a(href="/admin/sale/" + item.id, target="_blank")=item.title
+                td
+                  case item.type
+                    when 'value'
+                      | Giảm theo đơn giá
+                    when 'percent'
+                      | Giảm theo phần trăm
+                td
+                  case item.type
+                    when 'value'
+                      =money(item.value)
+                    when 'percent'
+                      =item.value + '%'
+                td=ymd2dmy(item.start_date)
+                td=ymd2dmy(item.end_date)
+                td
+                  case item.status
+                    when 'active'
+                      label.label.label-info Đang hiện
+                    when 'inactive'
+                      label.label.label-warning Đang ẩn
+                    when 'expried'
+                      label.label.label-danger Đã hết hạn

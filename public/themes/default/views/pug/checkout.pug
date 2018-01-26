@@ -1,0 +1,58 @@
+extends ./layout.pug
+
+block pre-include
+  title Thanh toán
+block post-include
+  link(rel='stylesheet', href=staticURI() + '/libs/toastr.min.css')
+  script(src=staticURI() + '/libs/toastr.min.js')
+block content
+  .container.checkout#checkout-cart
+    if count(cart)==0
+      .checkout-title
+        .col-xs-6.cart GIỎ HÀNG HIỆN ĐANG TRỐNG
+        .clearfix
+    else
+      .checkout-title
+        .col-xs-6-pull-right.cart GIỎ HÀNG
+        .clearfix
+      .col-xs-12.product-wrapper
+        each item in cart
+          .product-detail.row(data-id=item.product_id)
+            .image.col-xs-3(style="background:url('/uploads/"+resize(item.image, 240)+"')")
+            .info.col-xs-9
+              .col-xs-7.product-info
+                a.product-title(href="/san-pham/" + item.handle)=item.title
+                br
+                a.product-title(href="/san-pham/" + item.handle)=item.variant
+                p.product-title=item.quantity
+              .col-xs-5.product-price
+                .col-sm-6.col-xs-12.price
+                  span.main-price.orange=money(item.subTotal)
+      .col-xs-12.total
+        .col-xs-6.total-name Tổng tiền
+        .col-xs-6.total-amount.orange=money(total)
+      .col-xs-12.col-sm-12.customer-wrapper
+        form.customer-info.clearfix
+          .row
+            .col-xs-6.name
+              input.form-control(name="name" placeholder="Họ và Tên" required)
+            .col-xs-6.phone
+              input.form-control(name="phone" placeholder="Số điện thoại" required)
+            .col-xs-6.phone
+              input.form-control(name="email" placeholder="Email" required)
+          .row
+            .col-xs-6.region
+              select.form-control(name="region")
+                option(value="" selected disabled) Tỉnh/thành phố
+                each item in region
+                  option(value=item.id)=item.name
+            .col-xs-6.subregion
+              select.form-control(name="subregion")
+                option(value="" selected disabled) Quận/huyện
+          .row
+            .col-xs-12.address
+              input.form-control(name="address" placeholder="Địa chỉ giao hàng" required)
+          .row
+            .col-sm-6.col-xs-12.purchase
+              a.btn.btn-order.btn-checkout-done
+                span.main HOÀN TẤT THANH TOÁN

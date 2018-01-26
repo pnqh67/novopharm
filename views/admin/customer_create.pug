@@ -1,0 +1,32 @@
+extends ./layout.pug
+
+block pre-include
+  - var menu = 'customer';
+  - var childMenu = 'create';
+  title Thêm mới khách hàng
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Khách hàng
+      li
+        a Thêm mới
+  section.content
+    .box
+      .box-body
+        table.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
+          thead
+            tr
+              th Họ tên
+              th Số điện thoại
+              th Email
+              th Tỉnh thành
+          tbody
+            each item in customers
+              tr
+                td
+                  a(href="/admin/customer/" + item.id + "/order" target="_blank")=item.name
+                td=item.phone
+                td=item.email
+                td=item.region

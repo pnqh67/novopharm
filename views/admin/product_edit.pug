@@ -1,0 +1,335 @@
+extends ./layout.pug
+
+block pre-include
+  title=data.title
+  - var menu = 'product';
+  - var childMenu = 'list';
+block post-include
+  script(src= staticURI() + '/js/admin/product.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-sm-6
+      li
+        a Sản phẩm
+      li
+        a=data.title
+    ol.button-right.col-sm-6
+      li
+        a.btn.btn-review(href="/san-pham/" + data.handle, target="_blank")
+          i.fa.fa-eye
+          | Xem trên web
+      li
+        a.btn.btn-admin.btn-create-update(data-id=data.id)
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Cập nhật
+  section.content
+    .row
+      .col-sm-9.col-xs-12
+        .box.box-info
+          .form-horizontal.form-product
+            .box-title.clearfix
+              .col-xs-6.title THÔNG TIN
+              ul.nav.nav-tabs.nav-tabs-lang.col-xs-6
+                li.active
+                  a(data-toggle='tab', href='#tab-vi') Tiếng Việt
+                li
+                  a(data-toggle='tab', href='#tab-en') Tiếng Anh
+            .box-body
+              .tab-content
+                #tab-vi.tab-pane.fade.in.active
+                  .form-group
+                    .col-sm-2.control-label Tên sản phẩm
+                      strong.required  *
+                    .col-sm-10
+                      input.form-control.title(name="title", placeholder="Tên sản phẩm", value=data.title)
+                  .form-group
+                    .col-sm-2.control-label Đường dẫn
+                      strong.required  *
+                    .col-sm-10
+                      .input-group
+                        span.input-group-addon#basic-addon3=currentHost() + '/san-pham/'
+                        input.form-control.handle(aria-describedby="basic-addon3", name="handle", placeholder="duong-dan", value=data.handle)
+                  .form-group
+                    .col-sm-2.control-label Mô tả
+                    .col-sm-10
+                      textarea.form-control(name="description", placeholder="Mô tả ngắn")=data.description
+                  .form-group
+                    .col-sm-2.control-label Nội dung
+                    .col-sm-10
+                      textarea.form-control#content=data.content
+                #tab-en.tab-pane.fade.in
+                  .form-group
+                    .col-sm-2.control-label Tên sản phẩm
+                    .col-sm-10
+                      input.form-control(name="title_en", placeholder="Product name", value=data.title_en)
+                  .form-group
+                    .col-sm-2.control-label Đường dẫn
+                    .col-sm-10
+                      .input-group
+                        span.input-group-addon#basic-addon3=currentHost() + '/en/product/'
+                        input.form-control(aria-describedby="basic-addon3", name="handle_en", placeholder="url", value=data.handle_en)
+                  .form-group
+                    .col-sm-2.control-label Mô tả
+                    .col-sm-10
+                      textarea.form-control(name="description_en", placeholder="Description")=data.description_en
+                  .form-group
+                    .col-sm-2.control-label Nội dung
+                    .col-sm-10
+                      textarea.form-control#content_en=data.content_en
+
+        .box
+          .form-horizontal.form-product
+            .box-title.clearfix
+              .col-xs-6.title PHIÊN BẢN
+            .box-body
+              .form-group.mg0
+                .row
+                  .form-group
+                    .col-sm-2.control-label Quản lý tồn kho
+                    .col-sm-10.pd-right-25
+                      select.form-control(name="inventory-management", data-value=data.inventory_management)
+                        option(value="0") Không
+                        option(value="1") Có
+                  hr
+                  .form-group
+                    div(style="padding:0 20px 15px 10px")
+                      ul.list-unstyled.list-inline.select-variant.pull-left
+                        li Chọn:
+                        li
+                          a Tất cả
+                        each item,index in listOption
+                          each temp in item
+                            li
+                              a(class='option-' + (index + 1))=temp
+                      .pull-right
+                        a.btn-add-variant Thêm phiên bản mới
+                      .clearfix
+                    .table-variant
+                      table.table
+                        thead
+                          th.text-center
+                            input.select-all(type="checkbox")
+                          th #
+                          th Hình
+                          each val in [1,2,3,4,5,6]
+                            if data['option_' + val]
+                              th=getNameAttribute(data['option_' + val])
+                          th Giá
+                          th Giá so sánh
+                          th
+                        tbody
+                          each item in data.variants
+                            tr
+                              td
+                                input.checkboxes(type="checkbox" value=item.id)
+                              td=item.id
+                              td
+                                img(src='/uploads/' + resize(item.list_image[0]['name'], 240))
+                              each val in [1,2,3,4,5,6]
+                                if data['option_' + val]
+                                  td=item['option_' + val]
+                              td=money(item.price)
+                              td=money(item.price_compare)
+                              td(style="width:75px")
+                                a.btn-edit.btn-edit-variant(data-id=item.id, title="Chỉnh sửa")
+                                  i.fa.fa-pencil-square-o
+                                a.btn-remove.btn-remove-variant(data-id=item.id, title="Xóa")
+                                  i.fa.fa-trash
+        - var seo = getSEO('product', data.id)
+        include snippet/box-seo.pug
+      .col-sm-3.col-xs-12.box-right
+        .box
+          .form-horizontal
+            .box-title
+              .col-xs-12.title NHÓM SẢN PHẨM
+            .box-body
+              select.chosen-select.chosen-collection(data-placeholder="Chọn nhóm sản phẩm" multiple, data-value=data.collection_id)
+                each item in collections
+                  label
+                    option(value=item.id)=item.breadcrumb
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-12.title TAGS
+            .box-body
+              if count(data.tag)
+                input(type="text" data-role="tagsinput", name="tags", value=data.tag)
+              else
+                input(type="text" data-role="tagsinput", name="tags")
+              .list-tags
+                each item in tags
+                  span.tag-name(data-id=item.id)=item.name
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-12.title SẢN PHẨM MUA KÈM
+            .box-body
+              .add-product-buy-together
+                each productBuyTogether in productBuyTogethers
+                  .row(style='padding-left: 10px', data-product_buy_together=productBuyTogether.product_buy_together_id, data-price_sale=productBuyTogether.price_sale, data-promotion=productBuyTogether.promotion, data-status='active', data-title=productBuyTogether.product_buy_together_title)
+                    .pull-left
+                      a.product_buy_together(data-toggle='modal', data-target='#modal-edit-product-buy-together')=productBuyTogether.product_buy_together_title
+                      p.price_sale=money(productBuyTogether.price_sale)
+                    .pull-right
+                      a.btn.text-danger.btn-remove-product-buy-together(data-id=productBuyTogether.id)
+                        i.fa.fa-trash
+              a(data-toggle="modal" data-target="#modal-product-buy-together")
+                i.fa.fa-plus
+                |  Thêm sản phẩm mua kèm
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-12.title HÌNH ĐẠI DIỆN
+            .box-body
+              if data.featured_image
+                .item-choose-image.active(data-default=staticURI() + "/img/default.jpg")
+                  img(src='/uploads/' + resize(data.featured_image, 480))
+                  span.remove-image
+                    i.fa.fa-times
+                  input.value.featured-image(type="hidden", name="image", value=data.featured_image)
+              else
+                .item-choose-image(data-default=staticURI() + "/img/default.jpg")
+                  img(src=staticURI() + "/img/default.jpg")
+                  input.value.featured-image(type="hidden", name="image")
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-12.title TRẠNG THÁI
+            .box-body
+              .col-xs-12
+                .form-group
+                  .text-title Hiển thị
+                  select.form-control(name="status", data-value=data.status)
+                    option(value="active") Hiển thị
+                    option(value="inactive") Ẩn
+                  - var firstHistory = getFirstHistory('product', data.id);
+                  - var lastHistory = getLastHistory('product', data.id);
+                .form-group.history
+                  .row
+                    .col-xs-6 Ngày tạo:
+                    .col-xs-6
+                      b=datetime(data.created_at)
+                  .row
+                    .col-xs-6 Người tạo:
+                    .col-xs-6
+                      b=firstHistory.user_name
+                  .row
+                    .col-xs-6 Cập nhật sau cùng:
+                    .col-xs-6
+                      b=datetime(lastHistory.created_at)
+                  .row
+                    .col-xs-6 Người cập nhật sau cùng:
+                    .col-xs-6
+                      b=lastHistory.user_name
+
+  #modal-product-buy-together.modal.fade(role="dialog")
+    .modal-dialog(style="width: 70%")
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal') ×
+          h4.modal-title Tạo sản phẩm mua kèm
+        .modal-body
+          .form-horizontal.clearfix
+            .col-sm-9.col-xs-12.box-left
+              .box
+                .form-horizontal
+                  .box-title.clearfix
+                    .col-xs-6.title THÔNG TIN
+                  .box-body
+                    .form-group
+                      .col-sm-2.control-label Sản phẩm chính
+                        strong.required *
+                      .col-sm-10
+                        select.form-control(name='product' disabled)
+                          option(value=0) Sản phẩm hiện tại
+                    .form-group
+                      .col-sm-2.control-label Sản phẩm mua kèm
+                        strong.required *
+                      .col-sm-10
+                        select.form-control(name='product_buy_together')
+                          option(value=0) Mời chọn sản phẩm mua kèm...
+                          each product in products
+                            if product.id != data.id
+                              option(value=product.id)=product.title
+                    .form-group
+                      .col-sm-2.control-label Giá
+                        strong.required *
+                      .col-md-5
+                        .input-group
+                          span.input-group-addon
+                            label(style="color: grey; font-weight: normal") Giá bán
+                          input.form-control(name='price_sale')
+                      .col-md-5
+                        .input-group
+                          span.input-group-addon
+                            label(style="color: grey; font-weight: normal") Khuyến mãi (%)
+                          input.form-control(name='promotion')
+            .col-sm-3.col-xs-12.box-right
+              .box
+                .form-horizontal
+                  .box-title.clearfix
+                    .col-xs-12.title TRẠNG THÁI
+                  .box-body
+                    select.form-control(name="status")
+                      option(value="active") Hiển thị
+                      option(value="inactive") Ẩn
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+            button.btn.btn-primary.btn-create-product-buy-together Tạo
+
+  #modal-edit-product-buy-together.modal.fade(role="dialog")
+    .modal-dialog(style="width: 70%")
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal') ×
+          h4.modal-title Chỉnh sửa sản phẩm mua kèm
+        .modal-body
+          .form-horizontal.clearfix
+            .col-sm-9.col-xs-12.box-left
+              .box
+                .form-horizontal
+                  .box-title.clearfix
+                    .col-xs-6.title THÔNG TIN
+                  .box-body
+                    .form-group
+                      .col-sm-2.control-label Sản phẩm chính
+                        strong.required *
+                      .col-sm-10
+                        select.form-control(name='product' disabled)
+                          option(value='0') Sản phẩm hiện tại
+                    .form-group
+                      .col-sm-2.control-label Sản phẩm mua kèm
+                        strong.required *
+                      .col-sm-10
+                        select.form-control(name='product_buy_together')
+                          option(value='0') Mời chọn sản phẩm mua kèm...
+                          each product in products
+                            if product.id != data.id
+                              option(value=product.id)=product.title
+                    .form-group
+                      .col-sm-2.control-label Giá
+                        strong.required *
+                      .col-md-5
+                        .input-group
+                          span.input-group-addon
+                            label(style="color: grey; font-weight: normal") Giá bán
+                          input.form-control(name='price_sale')
+                      .col-md-5
+                        .input-group
+                          span.input-group-addon
+                            label(style="color: grey; font-weight: normal") Khuyến mãi (%)
+                          input.form-control(name='promotion')
+            .col-sm-3.col-xs-12.box-right
+              .box
+                .form-horizontal
+                  .box-title.clearfix
+                    .col-xs-12.title TRẠNG THÁI
+                  .box-body
+                    select.form-control(name="status")
+                      option(value="active") Hiển thị
+                      option(value="inactive") Ẩn
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+            button.btn.btn-primary.btn-create-product-buy-together Sửa

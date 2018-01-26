@@ -1,0 +1,37 @@
+extends ./layout.pug
+
+block pre-include
+  title=blog.title
+  if blog.image
+    - ogImage = blog.image
+  if blog.meta_description
+    - metaDescription = blog.meta_description
+  if blog.meta_robots
+    - meta_robots = blog.meta_robots;
+  - metaTitle = blog.title
+block post-include
+  script(src=themeURI() + '/libs/twbsPagination.min.js')
+  
+block content
+  .news-detail.container
+    include snippet/breadcrumb
+    .col-xs-12
+      .content.blog.row
+        h1.title=blog.title
+        p.description
+          b=blog.description
+        section !{blog.content}
+        .list-articles.clearfix.row
+          - var articles = listArticles(blog.id, page_number);
+          each article in articles
+            - var thumb = themeURI() + '/img/article_default.png';
+            if article.image
+              - var thumb = '/uploads/' + resize(article.image, 240);
+            .col-xs-12.article
+              a.cover.col-sm-3.col-xs-4(href='/article/' + article.handle, style='background-image:url(' + thumb + ')')
+              .col-sm-9.col-xs-8
+                a(href='/article/' + article.handle)=article.title
+                .date=ddMMYYYY(article.updated_at)
+                .news-content=article.description
+      if articles.total_pages > 1
+        #pagination.col-sm-12.text-right(data-page_number=page_number data-total=articles.total_pages)

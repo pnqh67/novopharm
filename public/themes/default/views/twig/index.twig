@@ -1,0 +1,188 @@
+{% extends "layout.twig" %}
+
+{% block pre_include %}
+{% set title = "Trang chủ" %}
+<title>{{ title }}</title>
+{% endblock pre_include %}
+
+
+{% block content %}
+
+<div class="main-wrapper container">
+  <div class="bg-main">
+    <section class="section1">
+      
+      {% set arrID = ('index_blogs')|getMeta %}
+      {% set homeBlog = 'article'|getItemFromArrId(arrID) %}
+      {% if homeBlog | countArr %}
+        {% for item in homeBlog %}
+          <div class="col-md-4 col-sm-4 col-xs-12 ">
+            <div class="item bg-color-{{loop.index}}">
+              <div class="box-title-s1 text-center">
+                <h3>{{ item.title }}</h3>
+              </div>
+              <div class="desc">
+                <p>
+                  {{ item.description }}
+                </p>
+              </div>
+              <div class="box-btn-s1 text-center">
+                <a href="/bai-viet/{{ item.handle }}" class="view-more">TÌM HIỂU THÊM</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+      <div class="clearfix"></div>
+    </section>
+    <section class="section2">
+      <div class="box-title-s2 text-center">
+        <img class="" src="{{ themeURI() }}/core/images/title-section2.png" alt="">
+      </div>
+      <div class="content-s2">
+        <div class="col-md-6">
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                  <a class="show" role="button" data-toggle="collapse"  href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    1. {{ ('product_title_1')|getMeta }}
+                    <i class="fa fa-minus" aria-hidden="true"></i>
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                  {{('product_content_1')|getMeta|raw}}
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                  <a class="collapsed" role="button" data-toggle="collapse"  href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    2. {{ ('product_title_2')|getMeta }}
+                    <i class="fa fa-minus" aria-hidden="true"></i>
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                  {{('product_content_2')|getMeta|raw}}
+
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingThree">
+                <h4 class="panel-title">
+                  <a class="collapsed" role="button" data-toggle="collapse"  href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    3. {{ ('product_title_3')|getMeta }}
+                    <i class="fa fa-minus" aria-hidden="true"></i>
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div class="panel-body">
+                  {{('product_content_3')|getMeta|raw}}
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xs-12">
+          <img class="img-responsive" src="/uploads/{{('product_image')|getMeta}}" alt="">
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </section>
+
+    <section class="section3">
+      <div class="box-content">
+        <div class="box-title-s3">
+          <h2 class="title text-center">Đặt hàng ngay<span></span></h2>
+        </div>
+        <div class="content-s3">
+          <form class="form-order">
+            <div class="form-row">
+              <input type="text" class="hidden product_price" value="{{ ('product_price')|getMeta }}">
+              <div class="form-group col-md-6">
+                <label><span class="star">*</span> Số lượng</label>
+                <div class="input-group">
+                  <span class="input-group-btn box-btn-minus">
+                    <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quantity">
+                      <i class="fa fa-minus" aria-hidden="true"></i>
+                    </button>
+                  </span>
+                  <input class="input-number" type="text" name="quantity" class="form-control input-number" value="1" min="1" max="1000">
+                  <span class="input-group-btn box-btn-plus">
+                    <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quantity">
+                      <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label><span class="star">*</span> Họ tên</label>
+                <input type="text" class="form-control" name="name">
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label>Email</label>
+                <input type="email" class="form-control" name="email" >
+              </div>
+              <div class="form-group col-md-6">
+                <label><span class="star">*</span> Số điện thoại</label>
+                <input type="text" class="form-control" name="phone">
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group">
+              <label><span class="star">*</span> Địa chỉ</label>
+              <textarea class="form-control" rows="4" id="comment" name="address"></textarea>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-8 col-sm-12 text-center">
+                <h4 class="total-amount">Tổng tiền: <span class="text">{{ ('product_price')|getMeta }}</span> VNĐ</h4>
+                <input type="text" name="total" class="hidden total_amount" value="{{ ('product_price')|getMeta }}">
+                <p class="color-0 text-left note">Lưu ý: Chi phí trên chưa bao gồm phí vận chuyển</p>
+              </div>
+              <div class="form-group col-md-4 col-sm-12 text-center">
+                <button class="btn-submit btn btn-default pull-right btn-order">Đặt hàng</button>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </form>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="section4">
+      <div class="box-title">
+        <h2 class="title text-center">{{ ('exp_title')|getMeta }}</h2>
+      </div>
+      <div class="bg-section4">
+
+        <div class="box-content">
+          <p class="text-center">
+            {{ ('exp_description')|getMeta }}
+          </p>
+          <div class="box-video">
+            <iframe width="100%" src="{{ ('exp_link')|getMeta }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+</div>
+{% endblock content %}

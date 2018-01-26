@@ -1,0 +1,80 @@
+extends ./layout.pug
+block pre-include
+  - var menu = 'article'
+  - var childMenu = 'blog'
+  title Nhóm bài viết/Nhóm kinh nghiệm
+
+block post-include
+  script(src=staticURI() + '/js/admin/blog.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Bài viết
+      li
+        a Nhóm bài viết/Nhóm kinh nghiệm
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      li
+        a.btn.btn-admin(href="/admin/blog/create") Thêm mới
+
+  section.content
+    .box.box-table
+      .row.box-header
+        h3.box-title DANH SÁCH
+      .box-body
+        table.table.table-bordered.table-striped.nowrap(cellspacing="0" width="100%")
+          .action-box.hidden
+            .dropdown
+              button.btn.btn-danger.dropdown-toggle(type="button" data-toggle="dropdown")
+                i.fa.fa-share
+                |  Chọn thao tác (đang chọn
+                span.num-select
+                |  nhóm bài viết)
+                span.caret
+              ul.dropdown-menu
+                li
+                  a.status-active(data-value='active') Ẩn
+                li
+                  a.status-inactive(data-value='inactive') Hiện
+                li
+                  a.status-delete(data-value='delete') Xóa
+          thead
+            tr
+              th.text-center
+                input.select-all(type="checkbox" style="margin-left: 15px")
+              th Mã
+              th Tiêu đề
+              th Loại
+              th Bệnh hô hấp/Kháng sinh
+              th Lượt xem
+              th Trạng thái
+          tbody
+            each item in data
+              tr
+                td.text-center
+                  input.checkboxes(type="checkbox" value=item.id)
+                td=item.id
+                td
+                  a(href="/admin/blog/" + item.id target="_blank")=item.title
+                td
+                  case item.type
+                    when 'experience'
+                      label.label.label-info Kinh nghiệm
+                    when 'article'
+                      label.label.label-primary Bài viết
+                td
+                  case item.type_blog
+                    when 'respiratory'
+                      label.label.label-info Bệnh hô hấp
+                    when 'antibiotic'
+                      label.label.label-info Kháng sinh
+                    when 'other'
+                      label.label.label-info Khác
+                td=item.view
+                td
+                  case item.status
+                    when 'active'
+                      label.label.label-info Đang hiện
+                    when 'inactive'
+                      label.label.label-warning Đang ẩn

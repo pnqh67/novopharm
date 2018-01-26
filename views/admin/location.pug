@@ -1,0 +1,148 @@
+extends ./layout.pug
+
+block pre-include
+  - var menu = 'location';
+  title Điểm bán
+  
+block post-include
+  script(src=staticURI() + '/js/admin/location.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Điểm bán
+      li
+        a Danh sách
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      li
+        a.btn.btn-admin(data-toggle="modal" data-target="#modal-create") Tạo điểm bán mới
+  section.content.clearfix
+    .box.box-table
+      .row.box-header
+        h3.box-title DANH SÁCH
+      .box-body
+        table.table.table-striped.display.nowrap(cellspacing="0" width="100%")
+          .action-box.hidden
+            .dropdown
+              button.btn.btn-danger.dropdown-toggle(type="button" data-toggle="dropdown")
+                i.fa.fa-share
+                |  Chọn thao tác (đang chọn
+                span.num-select
+                |  địa điểm)
+                span.caret
+              ul.dropdown-menu
+                li
+                  a.status-active(data-value='active') Ẩn
+                li
+                  a.status-inactive(data-value='inactive') Hiện
+                li
+                  a.status-delete(data-value='delete') Xóa
+          thead
+            tr
+              th.text-center
+                input.select-all(type="checkbox" style="margin-left: 15px")
+              th STT
+              th Tỉnh/TP
+              th Quận/Huyện
+              th Địa chỉ
+              th Tên
+              th Số điện thoại
+              th Trạng thái
+          tbody
+            -var stt = 1
+            each item in data
+              tr
+                td.text-center
+                  input.checkboxes(type="checkbox" value=item.id)
+                td=stt++
+                td=item.name_region
+                td=item.name_subregion
+                td=item.address
+                td
+                  a.show-location(data-toggle="modal" data-target="#modal-update" data-id=item.id)=item.name
+                td=item.phone_number
+                td
+                  case item.status
+                    when 'active'
+                      label.label.label-info Đang hiện
+                    when 'inactive'
+                      label.label.label-warning Đang ẩn
+
+  #modal-create.modal.fade(role="dialog")
+    .modal-dialog(style="width:60%")
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal') ×
+          h4.modal-title Tạo điểm bán
+        .modal-body
+          .form-group.col-xs-12.col-sm-6
+            .input-group
+              span.input-group-addon
+                label(style='color: grey; font-weight: normal') Tỉnh
+              select.form-control(name='region')
+                each item in region
+                  option(value=item.id)=item.name
+          .form-group.col-xs-12.col-sm-6
+            .input-group
+              span.input-group-addon
+                label(style='color: grey; font-weight: normal') Huyện
+              select.form-control(name='subregion')
+                each item in subregion
+                  option(value=item.id)=item.name
+          h4 Danh sách địa chỉ
+          .col-sm-12.no-padding.list-location
+          button.add-item-loction.btn.btn-primary Thêm điểm bán
+          .clearfix
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+          button.btn.btn-primary.btn-create-location Tạo điểm bán
+
+  #modal-update.modal.fade(role="dialog")
+    .modal-dialog(style="width:60%")
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal') ×
+          h4.modal-title Sửa điểm bán
+        .modal-body
+          .form-group.col-xs-12.col-sm-6
+            .input-group
+              span.input-group-addon
+                label(style='color: grey; font-weight: normal') Tỉnh
+              select.form-control(name='region')
+                each item in region
+                  option(value=item.id)=item.name
+          .form-group.col-xs-12.col-sm-6
+            .input-group
+              span.input-group-addon
+                label(style='color: grey; font-weight: normal') Huyện
+              select.form-control(name='subregion')
+                each item in subregion
+                  option(value=item.id)=item.name
+          h4 Danh sách địa chỉ
+          .col-sm-12.no-padding.list-location
+            .row.no-padding
+              .col-xs-12
+                label Địa chỉ
+                .pull-right
+                  a.btn-remove.btn-remove-item-location(title='Xóa')
+                    i.fa.fa-trash
+              .form-group.col-xs-12.col-sm-7
+                .input-group
+                  span.input-group-addon
+                    label(style='color: grey; font-weight: normal') Tên
+                  input.form-control(name='name')
+              .form-group.col-xs-12.col-sm-5
+                .input-group
+                  span.input-group-addon
+                    label(style='color: grey; font-weight: normal') SĐT
+                  input.form-control(name='phone')
+              .form-group.col-sm-12
+                .input-group
+                  span.input-group-addon
+                    label(style='color: grey; font-weight: normal') Địa chỉ
+                  input.form-control(name='address')
+          .clearfix
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+          button.btn.btn-primary.btn-update-location Sửa điểm bán

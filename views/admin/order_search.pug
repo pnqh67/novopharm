@@ -1,0 +1,58 @@
+extends ./layout.pug
+
+block pre-include
+  title Tìm kiếm đơn hàng
+  - var menu = 'order';
+  - var childMenu = 'search';
+block post-include
+  script.
+    initDataTable('table');
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Đơn hàng
+      li
+        a Tìm kiếm đơn hàng
+  section.content
+    .box
+      .box-body
+        table.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
+          thead
+            tr
+              th Mã đơn hàng
+              th Ngày đặt hàng
+              th Khách hàng
+              th Trạng thái
+              th Tổng tiền
+          tbody
+            each order in orders
+              tr
+                td
+                  a(href="/admin/order/" + order.id target="_blank").link=order.id
+                td=order.created_at
+                td=order.name
+                td
+                  if order.id_odoo == '-2'
+                    if order.order_status == "new"
+                      label.label.label-primary Dropship - Mới
+                    else
+                      if order.order_status == "done"
+                        label.label.label-success Dropship - Hoàn thành
+                      else
+                        if order.order_status == 'cancel'
+                          label.label.label-danger Dropship - Hủy
+                        else
+                          label.label.label-info Dropship - Xác nhận
+                  else
+                    if order.order_status == "new"
+                      label.label.label-primary Mới
+                    else
+                      if order.order_status == "done"
+                        label.label.label-success Hoàn thành
+                      else
+                        if order.order_status == 'cancel'
+                          label.label.label-danger Hủy
+                        else
+                          label.label.label-info Xác nhận
+                td.right=money(order.total)

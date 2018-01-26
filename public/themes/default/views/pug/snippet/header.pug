@@ -1,0 +1,50 @@
+script#search-product(type="text/x-tmpl").
+  <li>
+   <a href="/san-pham/{%=o.handle%}">
+     <img src="{%=o.featured_image%}">
+     <span>{%=o.title%}</span>
+     <span class="price">{%=o.price%}</span>
+      <span class="price-compare">{%=o.price_compare%}</span>
+   </a>
+  </li>
+
+header(data-uri=themeURI())
+  .header-menu
+    .container
+      .header-menu-top.clearfix
+        .col-sm-4.col-xs-2.pd-0.mobile-logo
+          a(href="/").logo
+            img(src=themeURI() +"/img/logo.png")
+        .col-sm-8.col-xs-8.mobile-search-box
+          .row
+            form.search.col-sm-12(action=fullUrl('tim-kiem'))
+              input.form-control(type="text" placeholder="Nhập sản phẩm cần tìm" name="q" autocomplete="off")
+              img(src="/themes/default/img/search-icon.png").hidden-xs.search-icon
+              img(src="/themes/default/img/search-icon-mobile.png").visible-xs.search-icon
+              ul.search-result
+      ul.main-menu.clearfix.hidden-xs
+        - var menus = menu();
+        each menu in menus
+          li.dropdown
+            a.dropdown-toggle(href=fullUrl(menu.link), data-toggle="dropdown")=menu.title
+            if menu.submenu
+              span.caret
+              ul.dropdown-menu
+                each item in menu.submenu
+                  li
+                    a(href=item.link)=item.title
+  .header-bottom.hidden-xs
+    .container
+      i.fa.fa-shopping-bag.fa-lg
+        span.quantity
+      .minicart
+        .minicart-header-wrapper.cart-detail
+          .minicart-detail
+          .cart.clearfix
+            .total-price.col-xs-12
+              p.label-text Tổng cộng
+              .price 0đ
+            .checkout-notes.l.col-xs-6
+              a.btn-bento.btn-checkout.btn-cart-dropdown.col-xs-12(href="/cart") Xem giỏ hàng
+            .checkout-notes.r.col-xs-6
+              a.btn-bento.btn-checkout.btn-cart-dropdown.col-xs-12(href="/checkout") Thanh toán

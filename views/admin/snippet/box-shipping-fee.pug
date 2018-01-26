@@ -1,0 +1,21 @@
+each item in shippingfee
+  .box
+    .form-horizontal
+      .box-title.clearfix
+        .col-xs-12.title=item.title
+      .box-body
+        if item.type == 'amount'
+          p Tính theo: Khối lượng (kg)
+          p Áp dụng cho đơn hàng có khối lượng từ #{item.from}kg đến #{item.to}kg
+        if item.type == 'price'
+          p Tính theo: Khoảng giá (VNĐ)
+          p Áp dụng cho đơn hàng có tổng giá trị từ #{money(item.from)} đến #{money(item.to)}
+        p Chi phí: #{money(item.price)}
+        .col-sm-4.col-sm-offset-8
+          .btn-toolbar
+            button.btn.btn-success.btn-edit-shipping-fee(data-id=item.id data-toggle="modal" data-target="#modal-subregion")
+              i.fa.fa-pencil-square-o &ensp;
+              | Chỉnh sửa
+            button.btn.btn-danger.btn-remove-shipping(data-id=item.id)
+              i.fa.fa-trash &ensp;
+              | Xóa

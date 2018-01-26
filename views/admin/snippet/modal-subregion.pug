@@ -1,0 +1,44 @@
+#modal-subregion.modal.fade(role='dialog' data-regionid=regionid)
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal') ×
+        h4.modal-title Thêm Phương thức
+      .modal-body
+        .form-horizontal.clearfix
+          .form-group.clearfix
+            .col-md-12
+              label.title Tên phương thức vận chuyển
+                strong.required  *
+              input.form-control(name="title" placeholder="Tên phương thức vận chuyển")
+          .form-group
+            .col-sm-6
+              label.title Tính theo
+              select.form-control(name='type')
+                option(name="type" value="amount") Khối lượng (kg)
+                option(name="type" value="price") Khoảng giá (VNĐ)
+            .col-sm-3
+              label.title Từ
+              input.form-control(name="from" placeholder="Từ")
+            .col-sm-3
+              label.title Đến
+              input.form-control(name="to" placeholder="Đến")
+          .form-group.clearfix
+            .col-sm-12
+              label.title Chi phí
+              input.form-control(name="price" placeholder="Chi phí")
+          if subregion[1].id
+            .form-group.clearfix
+              label.col-sm-12 Quận / Huyện
+              .col-sm-12
+                each item in subregion
+                  .form-group
+                    .col-sm-6
+                      input.form-control(placeholder=item.name disabled)
+                    .col-sm-6
+                      input.form-control(name="subregion_id" data-id=item.id placeholder="Nhập phí vận chuyển")
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+          button.btn.btn-primary.btn-create-shipping Thêm
+
+

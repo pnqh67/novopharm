@@ -1,0 +1,74 @@
+extends ./layout.pug
+
+block pre-include
+  - var menu = 'contact';
+  if (type == 'read')
+    - var childMenu = 'contact_read';
+    title Liên hệ chưa đọc
+  else
+    - var childMenu = 'contact_reply';
+    title Liên hệ chưa phản hồi
+  link(rel="stylesheet" href=staticURI() + "/libs/jquery-ui.min.css")
+  
+block post-include
+  script(src=staticURI() + '/js/admin/contact.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Liên hệ
+      li
+        if (type == 'read')
+          a Danh sách chưa đọc
+        else
+          a Danh sách chưa phản hồi
+  section.content.clearfix
+    .box.box-table
+      .row.box-header
+        h3.box-title DANH SÁCH
+      .box-body
+        table.table.table-striped.display.nowrap(cellspacing="0" width="100%")
+          .action-box.hidden
+            .dropdown
+              button.btn.btn-danger.dropdown-toggle(type="button" data-toggle="dropdown")
+                i.fa.fa-share
+                |  Chọn thao tác (đang chọn
+                span.num-select
+                |  liên hệ)
+                span.caret
+              ul.dropdown-menu
+                li
+                  a.contact-status(data-value='read') Đã đọc
+                li
+                  a.contact-status(data-value='unreply') Chưa phản hồi
+                li
+                  a.contact-status(data-value='reply') Đã phản hồi
+                li
+                  a.contact-status(data-value='delete') Xóa
+          thead
+            tr
+              th.text-center
+                input.select-all(type="checkbox" style="margin-left: 15px")
+              th.col-sm-1 Mã
+              th.col-sm-2 Tên
+              th.col-sm-2 Số điện thoại
+              th.col-sm-5 Nội dung
+              th.col-sm-2 Trạng thái
+              
+          tbody
+            each item in data
+              tr
+                td.text-center
+                  input.checkboxes(type="checkbox" value=item.id)
+                td.col-sm-1=item.id
+                td.col-sm-3
+                  a(href="/admin/contact/get?id=" + item.id)=item.name
+                td.col-sm-2=item.phone
+                td.col-sm-4=item.content
+                td.col-sm-2
+                  case item.reply_status
+                    when 'reply'
+                      label.label.label-info Đã phản hồi
+                    when 'unreply'
+                      label.label.label-warning Chưa phản hồi

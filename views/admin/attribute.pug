@@ -1,0 +1,146 @@
+extends ./layout.pug
+
+block pre-include
+  - menu = 'product';
+  - childMenu = 'attribute';
+  title Thuộc tính
+
+block post-include
+  script(src=staticURI() + '/js/admin/attribute.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Thuộc tính
+      li
+        a Danh sách thuộc tính
+    ol.button-right.col-sm-4
+      li
+        a.btn.btn-admin(data-toggle="modal" data-target="#modal-add") Thêm thuộc tính
+  section.content.attribute.clearfix
+    each item in data
+      .col-lg-4.col-md-6.col-sm-12.col-xs-12
+        .attribute-card.clearfix(data-id=item.id)
+          .title=item.name
+            if item.name_en
+              |  (#{item.name_en}
+              | )
+            .group-btn
+              i.fa.fa-edit.edit-attribute.edit-attribute(data-id=item.id)
+              i.fa.fa-trash.delete-attribute(data-id=item.id)
+          .option-list
+            if item.child
+              .clearfix
+                .col-sm-4 Tên
+                .col-sm-4 Giá trị
+                .col-sm-4.text-right Chỉnh sửa
+              each child in item.child
+                if child.id
+                  .clearfix
+                    .col-sm-4=child.name
+                      if child.name_en
+                        |  (#{child.name_en})
+                    .col-sm-4
+                      if child.option
+                        =child.option
+                        if child.option_en
+                          |  (#{child.option_en})
+                      else
+                        | -
+                    .col-sm-4.text-right
+                      i.fa.fa-edit.edit-option(data-id=child.id)
+                      i.fa.fa-trash.delete-option(data-id=child.id, data-option=1)
+          .col-xs-12.group-add-new-option
+            .input-group.w100
+              .row
+                .col-xs-6.pd-right-10
+                  input.form-control(type='text', name="name", placeholder="Tên - VI")
+                .col-xs-6.pd-left-10
+                  input.form-control(type='text', name="name_en", placeholder="Tên - EN")
+              .row
+                .col-xs-6.pd-right-10
+                  input.form-control(type='text', name="option", placeholder="Giá trị - VI")
+                .col-xs-6.pd-left-10
+                  input.form-control(type='text', name="option_en", placeholder="Giá trị - EN")
+              .col-xs-12.text-center
+                .row
+                  button.w100.btn.btn-default.add-new-option(data-parent_id=item.id) Thêm mới
+
+    #modal-add.modal.fade(role='dialog')
+      .modal-dialog
+        .modal-content.form-add-attribute
+          .modal-header
+            button.close(type='button', data-dismiss='modal') ×
+            h4.modal-title Thêm thuộc tính
+          .modal-body.clearfix
+            .form-horizontal
+              .box-body
+                .form-group
+                  label.col-sm-4.control-label Tên thuộc tính
+                  .col-sm-8
+                    input.form-control(type="text" name="name" placeholder="Tên thuộc tính - VI")
+                .form-group
+                  label.col-sm-4.control-label Tên thuộc tính (en)
+                  .col-sm-8
+                    input.form-control(type="text" name="name_en" placeholder="Tên thuộc tính - EN")
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') Đóng
+            button.btn.btn-admin.btn-create
+              i.fa.fa-floppy-o
+              i.fa.fa-circle-o-notch.fa-spin
+              | Lưu lại
+    #modal-edit.modal.fade(role='dialog')
+      .modal-dialog
+        .modal-content.form-add-attribute
+          .modal-header
+            button.close(type='button', data-dismiss='modal') ×
+            h4.modal-title Chỉnh sửa
+          .modal-body.clearfix
+            .form-horizontal
+              .box-body
+                .form-group
+                  label.col-sm-4.control-label Tên thuộc tính
+                  .col-sm-8
+                    input.form-control(type="text" name="name" placeholder="Tên thuộc tính - VI")
+                .form-group
+                  label.col-sm-4.control-label Tên thuộc tính (en)
+                  .col-sm-8
+                    input.form-control(type="text" name="name_en" placeholder="Tên thuộc tính - EN")
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') Đóng
+            button.btn.btn-admin.btn-update
+              i.fa.fa-floppy-o
+              i.fa.fa-circle-o-notch.fa-spin
+              | Cập nhật
+    #modal-edit-option.modal.fade(role='dialog')
+      .modal-dialog
+        .modal-content.form-add-attribute
+          .modal-header
+            button.close(type='button', data-dismiss='modal') ×
+            h4.modal-title Chỉnh sửa
+          .modal-body.clearfix
+            .form-horizontal
+              .box-body
+                .form-group
+                  label.col-sm-4.control-label Tên
+                  .col-sm-8
+                    input.form-control(type="text" name="name" placeholder="Tên - VI")
+                .form-group
+                  label.col-sm-4.control-label Tên (en)
+                  .col-sm-8
+                    input.form-control(type="text" name="name_en" placeholder="Tên - EN")
+                .form-group
+                  label.col-sm-4.control-label Giá trị
+                  .col-sm-8
+                    input.form-control(type="text" name="option" placeholder="Giá trị - VI")
+                .form-group
+                  label.col-sm-4.control-label Giá trị (en)
+                  .col-sm-8
+                    input.form-control(type="text" name="option_en" placeholder="Giá trị - EN")
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') Đóng
+            button.btn.btn-admin.btn-update
+              i.fa.fa-floppy-o
+              i.fa.fa-circle-o-notch.fa-spin
+              | Cập nhật

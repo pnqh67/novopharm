@@ -1,0 +1,56 @@
+extends ./layout.pug
+
+block pre-include
+  - var menu = 'contact';
+  title Chi tiết liên hệ
+  link(rel="stylesheet" href=staticURI() + "/libs/jquery-ui.min.css")
+  
+block post-include
+  script(src=staticURI() + '/js/admin/contact.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a(href="/admin/contact") Liên hệ
+      li
+        a Chi tiết liên hệ
+  section.content.clearfix
+    .box.box-table
+      .row.box-header
+        h3.box-title.contact-title-detail='Chi tiết liên hệ' + ' '
+          if (data.reply_status=='reply')
+            label.label.label-default Đã phản hồi
+          else
+            label.label.label-warning Chưa phản hồi
+      .box-body
+        .pull-left
+          p
+            b='Gửi vào lúc: '
+            =data.created_at
+          p
+            b='Từ email: '
+            a(href='mailto:' + data.email)=data.email
+          p
+            b='Họ tên: '
+            =data.name
+          p
+            b='Điện thoại: '
+            a(href='tel:' + data.phone)=data.phone
+        .pull-right
+          .action-contact
+            .dropdown
+              button.btn.btn-default.dropdown-toggle(type="button" data-toggle="dropdown")='Cập nhập trạng thái  '
+                span.caret
+              ul.dropdown-menu
+                li
+                  a.contact-status-detail(data-value='unreply' data-id=data.id data-status='reply') Chưa phản hồi
+                li
+                  a.contact-status-detail(data-value='reply' data-id=data.id data-status='reply') Đã phản hồi
+                hr(style="margin: 5px 0")
+                li
+                  a.contact-status-detail(data-value='delete' data-id=data.id data-status='display') Xóa
+        .clearfix
+        hr
+        p=data.content
+

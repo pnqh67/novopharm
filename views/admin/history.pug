@@ -1,0 +1,93 @@
+extends ./layout.pug
+
+block pre-include
+  - var menu = 'dashboard'
+  title Nhật ký hoạt động
+  
+block post-include
+  script(src=staticURI() + '/js/admin/history.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Bảng điều khiển
+      li
+        a Nhật ký hoạt động
+  section.content.clearfix
+    .box.box-table
+      .row.box-header
+        h3.box-title DANH SÁCH
+      .box-body
+        table.table.table-striped.display.nowrap(cellspacing="0" width="100%")
+          .action-box.hidden
+            .dropdown
+              button.btn.btn-danger.dropdown-toggle(type="button" data-toggle="dropdown")
+                i.fa.fa-share
+                |  Chọn thao tác (đang chọn
+                span.num-select
+                |  lịch sử)
+                span.caret
+              //ul.dropdown-menu
+              //  li
+              //    a.status-active(data-value='active') Ẩn
+              //  li
+              //    a.status-inactive(data-value='inactive') Hiện
+              //  li
+              //    a.status-delete(data-value='delete') Xóa
+          thead
+            tr
+              th.text-center
+                input.select-all(type="checkbox" style="margin-left: 15px")
+              th Mã
+              th Tên
+              th Thao tác
+              th Thời gian
+              th Loại
+          tbody
+            - var stt = 1
+            each item in data
+              tr
+                td.text-center
+                  input.checkboxes(type="checkbox" value=item.id)
+                td=stt++
+                td=item.user_name
+                td
+                  case item.action
+                    when 'create'
+                      | Tạo
+                    when 'update'
+                      | Cập nhập
+                    when 'delete'
+                      | Xóa
+                  case item.type
+                    when 'product'
+                      |  sản phẩm &#09;
+                      a(href='/admin/product/' + item.type_id target='_blank')=item.type_title
+                    when 'sale'
+                      |  chương trình giảm giá &#09;
+                      a(href='/admin/sale/' + item.type_id target='_blank')=item.type_title
+                    when 'collection'
+                      |  nhóm sản phẩm &#09;
+                      a(href='/admin/sale/' + item.type_id target='_blank')=item.type_title
+                    when 'blog'
+                      |  nhóm bài viết &#09;
+                      a(href='/admin/blog/' + item.type_id target='_blank')=item.type_title
+                    when 'article'
+                      |  bài viết &#09;
+                      a(href='/admin/article/' + item.type_id target='_blank')=item.type_title
+                    when 'page'
+                      |  trang nội dung &#09;
+                      a(href='/admin/page/' + item.type_id target='_blank')=item.type_title
+                    when 'coupon'
+                      |  mã giảm giá &#09;
+                      a(href='/admin/coupon/' + item.type_id target='_blank')=item.type_title
+                    when 'role'
+                      |  quyền &#09;
+                      a(href='/admin/role/' + item.type_id target='_blank')=item.type_title
+                td=item.created_at
+                td
+                  if !item.user_type
+                    | Quản trị viên
+                  else
+                    | Người dùng

@@ -1,0 +1,250 @@
+aside.main-sidebar
+  section.sidebar
+    ul.sidebar-menu
+      li.header
+        a.logo-admin(href="/admin")
+          img(src=staticURI() + '/img/lazi-logo.png')
+      - var itemClass = (menu == 'dashboard' ? 'active' : '');
+      li.treeview
+        a(href="/admin/dashboard" class=itemClass)
+          i.fa.fa-tachometer
+          span Bảng điều khiển
+      - var itemClass = (menu == 'order' ? 'active' : '');
+      li.treeview(class=itemClass)
+        a.main-item(class=itemClass)
+          i.fa.fa-shopping-cart
+          span Đơn hàng
+          i.fa.fa-angle-left.pull-right
+        ul.treeview-menu
+          - var liClass = (childMenu == 'new' ? 'active' : '');
+          li
+            a(href='/admin/order?order_status=new' class=liClass)
+              | Mới
+          - var liClass = (childMenu == 'confirm' ? 'active' : '');
+          li
+            a(href='/admin/order?order_status=confirm' class=liClass)
+              | Đã xác nhận
+          - var liClass = (childMenu == 'unpaid' ? 'active' : '');
+          li
+            a(href='/admin/order?order_status=confirm&payment_status=0' class=liClass)
+              | Chưa thanh toán
+          - var liClass = (childMenu == 'done' ? 'active' : '');
+          li
+            a(href='/admin/order?order_status=done' class=liClass)
+              | Hoàn tất
+          - var liClass = (childMenu == 'return' ? 'active' : '');
+          li
+            a(href='/admin/order?order_status=return' class=liClass)
+              | Bị hoàn trả
+          - var liClass = (childMenu == 'cancel' ? 'active' : '');
+          li
+            a(href='/admin/order?order_status=cancel' class=liClass)
+              | Bị hủy
+          - var liClass = (childMenu == 'all' ? 'active' : '');
+          li
+            a(href='/admin/order' class=liClass)
+              | Tất cả
+      - var itemClass = (menu == 'product' ? 'active' : '');
+      li.treeview(class=itemClass)
+        a.main-item(class=itemClass)
+          i.fa.fa-product-hunt
+          span Sản phẩm
+          i.fa.fa-angle-left.pull-right
+        ul.treeview-menu
+          - var liClass = (childMenu == 'create' ? 'active' : '');
+          li
+            a(href='/admin/product/create' class=liClass)
+              | Thêm mới
+          - var liClass = (childMenu == 'list' ? 'active' : '');
+          li
+            a(href="/admin/product" class=liClass)
+              | Danh sách
+          - var liClass = (childMenu == 'collection' ? 'active' : '');
+          li
+            a(href='/admin/collection' class=liClass)
+              | Nhóm sản phẩm
+          - var liClass = (childMenu == 'product_buy_together' ? 'active' : '');
+          //li
+          //  a(href='/admin/product_buy_together' class=liClass)
+          //    | Sản phẩm mua kèm
+          //- - var liClass = (childMenu == 'product_buy_together' ? 'active' : '');
+          //- li
+          //-   a(href='/admin/product_buy_together' class=liClass)
+          //-     | Sản phẩm mua kèm
+          - var liClass = (childMenu == 'attribute' ? 'active' : '');
+          li
+            a(href='/admin/attribute' class=liClass)
+              | Thuộc tính
+      - var itemClass = (menu == 'coupon' ? 'active' : '');
+      li.treeview(class=itemClass)
+        a.main-item(class=itemClass)
+          i.fa.fa-gift
+          span Khuyến mãi
+          i.fa.fa-angle-left.pull-right
+        ul.treeview-menu
+          - var liClass = (childMenu == 'coupon' ? 'active' : '');
+          li
+            a(href='/admin/coupon' class=liClass)
+              | Mã giảm giá
+          - var liClass = (childMenu == 'sale' ? 'active' : '');
+          li
+            a(href="/admin/sale" class=liClass)
+              | Chương trình khuyến mãi
+      - var itemClass = (menu == 'customer' ? 'active' : '');
+      li.treeview(class=itemClass)
+        a.main-item(class=itemClass)
+          i.fa.fa-address-card-o
+          span Khách hàng
+          i.fa.fa-angle-left.pull-right
+        ul.treeview-menu
+          - var liClass = (childMenu == 'list' ? 'active' : '');
+          li
+            a(href='/admin/customer' class=liClass)
+              | Danh sách
+
+      - var itemClass = (menu == 'article' ? 'active' : '');
+      li.treeview(class=itemClass)
+        a.main-item(class=itemClass)
+          i.fa.fa-pencil-square-o
+          span Bài viết
+          i.fa.fa-angle-left.pull-right
+        ul.treeview-menu
+          - var liClass = (childMenu == 'create' ? 'active' : '');
+          li
+            a(href='/admin/article/create' class=liClass)
+              | Viết bài mới
+          - var liClass = (childMenu == 'list' ? 'active' : '');
+          li
+            a(href="/admin/article" class=liClass)
+              | Danh sách
+          - var liClass = (childMenu == 'blog' ? 'active' : '');
+          li
+            a(href="/admin/blog" class=liClass)
+              | Nhóm bài viết/Kinh nghiệm
+          - var liClass = (childMenu == 'page' ? 'active' : '');
+          li
+            a(href='/admin/page' class=liClass)
+              | Trang nội dung
+          - var liClass = (childMenu == 'experience' ? 'active' : '');
+          li
+            a(href='/admin/experience' class=liClass)
+              | Kinh nghiệm sử dụng
+      - var itemClass = (menu == 'comment' ? 'active' : '');
+      li.treeview(class=itemClass)
+        a.main-item(class=itemClass)
+          i.fa.fa-pencil-square-o
+          span Bình luận
+          i.fa.fa-angle-left.pull-right
+        ul.treeview-menu
+          //- var liClass = (childMenu == 'comment_new' ? 'active' : '');
+          //  li
+          //    a(href="/admin/article" class=liClass)
+          //      | Mới
+          //- var liClass = (childMenu == '' ? 'active' : '');
+          //  li
+          //    a(href="/admin/article/" class=liClass)
+          //      | Chưa phản hồi
+          - var liClass = (childMenu == 'comment_product' ? 'active' : '');
+            li
+              a(href="/admin/comment/product" class=liClass)
+                | Thuộc sản phẩm
+          - var liClass = (childMenu == 'comment_article' ? 'active' : '');
+            li
+              a(href="/admin/comment/article" class=liClass)
+                | Thuộc bài viết
+          - var liClass = (childMenu == 'comment_all' ? 'active' : '');
+            li
+              a(href="/admin/comment" class=liClass)
+                | Tất cả
+      - var itemClass = (menu == 'contact' ? 'active' : '');
+      li.treeview(class=itemClass)
+        a.main-item(class=itemClass)
+          i.fa.fa-envelope-open-o
+          span Liên hệ
+          i.fa.fa-angle-left.pull-right
+        ul.treeview-menu
+          - var liClass = (childMenu == 'contact_read' ? 'active' : '');
+            li
+              a(href="/admin/contact/get?read=1" class=liClass)
+                | Mới
+          - var liClass = (childMenu == 'contact_reply' ? 'active' : '');
+            li
+              a(href="/admin/contact/get?reply=1" class=liClass)
+                | Chưa phản hồi
+          - var liClass = (childMenu == 'contact_all' ? 'active' : '');
+            li
+              a(href="/admin/contact" class=liClass)
+                | Tất cả
+      - var itemClass = (menu == 'slider' ? 'active' : '');
+      li.treeview(class=itemClass)
+        a.main-item(class=itemClass)
+          i.fa.fa-cog
+          span Slider
+          i.fa.fa-angle-left.pull-right
+        ul.treeview-menu
+          - var liClass = (childMenu == 'slider_create' ? 'active' : '');
+            li
+              a(href='/admin/slider/create' class=liClass)
+                | Slider mới
+          - var liClass = (childMenu == 'slider' ? 'active' : '');
+            li
+              a(href='/admin/slider' class=liClass)
+                | Danh sách
+      - var itemClass = (menu == 'location' ? 'active' : '');
+        li.treeview(class=itemClass)
+          a.main-item(href='/admin/location' class=itemClass)
+            i.fa.fa-cog
+            span Điểm bán
+      - var itemClass = (menu == 'setting' ? 'active' : '');
+      li.treeview(class=itemClass)
+        a.main-item(class=itemClass)
+          i.fa.fa-cog
+          span Cấu hình
+          i.fa.fa-angle-left.pull-right
+        ul.treeview-menu
+          - var liClass = (childMenu == 'setting' ? 'active' : '');
+          li
+            a(href='/admin/setting' class=liClass)
+              | Thiết lập chung
+          - var liClass = (childMenu == 'menu' ? 'active' : '');
+          li
+            a(href='/admin/menu' class=liClass)
+              | Menu
+          //- var liClass = (childMenu == 'slider' ? 'active' : '');
+          //li
+          //  a(href='/admin/slider' class=liClass)
+          //    | Slider
+          - var liClass = (childMenu == 'shipping_fee' ? 'active' : '');
+          li
+            a(href='/admin/shipping_fee' class=liClass)
+              | Phí giao hàng
+          //- - var liClass = (childMenu == 'image' ? 'active' : '');
+          //- li
+          //-   a(href='/admin/images' class=liClass)
+          //-     | Hình ảnh
+      - var itemClass = (menu == 'user' ? 'active' : '');
+      li.treeview(class=itemClass)
+        a.main-item(class=itemClass)
+          i.fa.fa-user
+          span Quản trị viên
+          i.fa.fa-angle-left.pull-right
+        ul.treeview-menu
+          - var liClass = (childMenu == 'list' ? 'active' : '');
+          li
+            a(href='/admin/user' class=liClass)
+              | Danh sách
+          //- - var liClass = (childMenu == 'history' ? 'active' : '');
+          //- li
+          //-   a(href='/admin/user/history' class=liClass)
+          //-     | Lịch sử hoạt động
+          - var liClass = (childMenu == 'role' ? 'active' : '');
+          li
+            a(href='/admin/role' class=liClass)
+              | Phân quyền
+    .footer
+      .info
+        p
+          b=name()
+        p
+          a(data-toggle="modal" data-target="#modal-change-password" href="#" style="display:inline-block;") Đổi mật khẩu -
+          a(href='/admin/logout') &nbsp;Đăng xuất

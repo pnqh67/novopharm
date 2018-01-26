@@ -1,0 +1,8 @@
+{% for item in subregionsFirst %}
+  <li class="col-xs-6">
+    <a class="" href="diem-ban/chi-tiet?subregion={{item.id}}">{{item.name}}</a>
+  </li>
+  {% if loop.index % 2 == 0 %}
+    <div class="clearfix"></div>
+  {% endif %}
+{% endfor %}

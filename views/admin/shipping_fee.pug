@@ -1,0 +1,135 @@
+extends ./layout.pug
+
+
+block pre-include
+  - var menu = 'setting';
+  - var childMenu = 'shipping_fee';
+  title Phí vận chuyển
+
+block post-include
+  script(src=staticURI() + '/js/admin/shipping_fee.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Cấu hình
+      li
+        a Phí vận chuyển
+
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      span.middle-inline-block
+      li
+        a.btn.btn-admin(href='/admin/shipping_fee/create') Thêm phí vận chuyển
+
+  section.content
+    .box.box-table
+      .row.box-header
+        h3.box-title DANH SÁCH
+      .box-body
+        table.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
+          .action-box.hidden
+            .dropdown
+              button.btn.btn-danger.dropdown-toggle(type="button" data-toggle="dropdown")
+                i.fa.fa-share
+                |  Chọn thao tác (đang chọn
+                span.num-select
+                |  mã giảm giá)
+                span.caret
+              ul.dropdown-menu
+                //li
+                //  a.status-active(data-value='active') Ẩn
+                //li
+                //  a.status-inactive(data-value='inactive') Hiện
+                //li
+                //  a.status-delete(data-value='delete') Xóa
+          thead
+            tr
+              th.text-center
+                input.select-all(type="checkbox" style="margin-left: 15px")
+              th Mã
+              th Khu vực
+              th Phương thức
+          tbody
+            - var id = -1
+            each item in data
+              if item.id != id
+                -id = item.id
+                tr
+                  td.text-center
+                    input.checkboxes(type="checkbox" value=item.id)
+                  td=item.id
+                  td
+                    a(href="/admin/shipping_fee/edit/" + item.id )=item.name
+                  td
+                    each child in data
+                      if child.id == id
+                        p=child.title
+
+
+      #modal-add-slide.modal-add-slide.modal.fade(role='dialog')
+        .modal-dialog
+          .modal-content
+            .modal-header
+              button.close(type='button', data-dismiss='modal') ×
+              h4.modal-title Thêm slider
+            .modal-body.clearfix
+              .form-horizontal
+                .box-body
+                  .form-group
+                    label.col-sm-2.control-label Tiêu đề 
+                    .col-sm-10
+                      input.form-control(type="text" name="title" placeholder="Tiêu đề")
+                  .form-group
+                    label.col-sm-2.control-label Hình ảnh
+                    form.col-sm-10.form-upload-image
+                      img(src=staticURI() + "/img/default_image.png")
+                      input.upload.form-control(type="file" name="upload[]")
+                      input(type="hidden" name="image")
+                  .form-group
+                    label.col-sm-2.control-label Link
+                    .col-sm-10
+                      input.form-control(type="text" name="link" placeholder="Link")
+                  .form-group
+                    label.col-sm-2.control-label Hiển thị
+                    .col-sm-10
+                      select.form-control(name="display")
+                        option(value="1") Có
+                        option(value="0") Không
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+              button.btn.btn-primary.btn-add-slide(type='button') Đồng ý
+
+
+      #modal-edit-slide.modal-edit-slide.modal.fade(role='dialog')
+        .modal-dialog
+          .modal-content
+            .modal-header
+              button.close(type='button', data-dismiss='modal') ×
+              h4.modal-title Chỉnh sửa slider
+            .modal-body.clearfix
+              .form-horizontal
+                .box-body
+                  .form-group
+                    label.col-sm-2.control-label Tiêu đề 
+                    .col-sm-10
+                      input.form-control(type="text" name="title")
+                  .form-group
+                    label.col-sm-2.control-label Hình ảnh
+                    form.col-sm-10.form-upload-image
+                      img(src=staticURI() + "/img/default_image.png")
+                      input.upload.form-control(type="file" name="upload[]")
+                      input(type="hidden" name="image")
+                  .form-group
+                    label.col-sm-2.control-label Link
+                    .col-sm-10
+                      input.form-control(type="text" name="link")
+                  .form-group
+                    label.col-sm-2.control-label Hiển thị
+                    .col-sm-10
+                      select.form-control(name="display")
+                        option(value="1") Có
+                        option(value="0") Không
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+              button.btn.btn-primary.btn-update-slide(type='button') Cập nhật

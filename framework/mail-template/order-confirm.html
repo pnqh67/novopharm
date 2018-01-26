@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Order confirm</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header>
+      <div class="greet">
+        <p>Xin chào {{customer_name}}</p>
+      </div>
+      <div class="notification">
+        <p>CHUC MUNG BẠN ĐÃ ĐẶT HÀNG THÀNH CÔNG TẠI ...</p>
+        <p>Mã đơn hàng của bạn là {{order_id}}</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <div class="customer-info">
+        <p>Họ tên: {{customer_name}}</p>
+        <p>Email: {{customer_email}}</p>
+        <p>Số điện thoại: {{customer_phone}}</p>
+        <p>Địa chỉ giao hàng: {{customer_address}}</p>
+      </div>
+      <div class="order-info">
+        <p>THÔNG TIN ĐƠN HÀNG</p>
+        <!-- each order in orders -->
+        <table>
+          <tr>
+            <th>{{order_title}}</th>
+          </tr>
+          <tr>
+            <td>{{order_id}}</td>
+            <td>{{order_quantity}}</td>
+            <td>{{order_price}}</td>
+            <td>{{order_subtotal}}</td>
+          </tr>
+        </table>
+        <div class="total-price">
+          <p>Tổng cộng: {{total}}</p>
+          <p>Shipping: {{shipping}}</p>
+          <p>Thành tiền: {{money}}</p>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <p>CẢM ƠN BẠN ĐÃ ĐẶT HÀNG TẠI ...</p>
+    </footer>
+  </body>
+</html>

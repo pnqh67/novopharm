@@ -1,0 +1,45 @@
+extends ./layout.pug
+
+block pre-include
+  - var menu = 'user';
+  - var childMenu = 'list';
+  title Quản trị viên
+
+block post-include
+  script(src=staticURI() +'/js/admin/user.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Quản trị viên
+      li
+        a Danh sách
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      li
+        a.btn.btn-default(href="/admin/user/create") Thêm mới
+  section.content
+    .box
+      .box-body
+        table.table.table-bordered.table-striped.display.nowrap(cellspacing="0" width="100%")
+          thead
+            tr
+              th Họ tên
+              th Email
+              th Số điện thoại
+              th Phân quyền
+              th Chỉnh sửa
+          tbody
+            each item in user
+              unless item.role == 'super'
+                tr
+                  td=item.name
+                  td=item.email
+                  td=item.phone
+                  td=item.role
+                  td
+                    a.btn-edit(href="/admin/user/" + item.id)
+                      i.fa.fa-pencil-square-o
+                    if item.email != login_email
+                      a.btn-remove(data-id=item.id)
+                        i.fa.fa-trash

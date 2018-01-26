@@ -1,0 +1,101 @@
+
+{% extends "layout.twig" %}
+
+{% block pre_include %}
+	<title>Kinh nghiệm sử dụng</title>
+	<link rel="stylesheet" href="{{ themeURI() }}/core/css/lightgallery.css">
+{% endblock pre_include %}
+
+{% block post_include %}
+	<script src="{{ themeURI() }}/core/js/picturefill.min.js"></script>
+  <script src="{{ themeURI() }}/core/js/lightgallery-all.min.js"></script>
+  <script src="{{ themeURI() }}/core/js/jquery.mousewheel.min.js"></script>
+  <script type="text/javascript">
+	  jQuery(document).ready(function($){
+      $('.lightgallery').lightGallery();
+	  });
+
+  </script>
+{% endblock post_include %}
+{% block content %}
+<!-- BEGIN main-wrapper -->
+  <div class="main-wrapper main-wrapper2 container">
+      <div class="bg-main">
+          <section class="experience-wrapper">
+              <div class="video-intro">
+                  <iframe src="{{ ('exp_link')|getMeta }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                  <h3>{{ ('exp_title')|getMeta }}</h3>
+                  <p>{{ ('exp_description')|getMeta }}</p>
+              </div>
+              <!-- Gallery -->
+              {% if blogs|countArr %}
+              	{% for item in blogs %}
+              	    <div class="demo-gallery">
+			                <h2 class="title-post">{{ item.title }}</h2>
+			                <p class="desc">{{ item.description }}</p>
+			                {% if item['experiences']|countArr %}
+				                
+			                  <ul class="list-unstyled lightgallery">
+			                  	{% for part in item['experiences'] %}
+				                    <li class="item col-xs-6 col-sm-4" data-src="{{ part.link }}" >
+			                          <a class="video box-img" href="">
+			                              <img class="img-responsive" src="/uploads/{{ part.image }}">
+			                          </a>
+			                          <h4 class="title-video">{{ part.title }}</h4>
+			                      </li>
+				                	{% endfor %}
+			                  </ul>
+		                  {% endif %}
+		                  <div class="clearfix"></div>
+			              </div>    
+              	{% endfor %}
+	                        
+              {% endif %}
+              <!-- Gallery 2 -->
+              <!-- <div class="demo-gallery">
+                <h2 class="title-post">KINH NGHIỆM SỬ DỤNG CỦA PHỤ HUYNH</h2>
+                <p class="desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt ipsa velit, iusto quam obcaecati illum voluptate ullam, sunt illo maxime ratione quia aliquid fuga reprehenderit distinctio nesciunt alias excepturi, sint.</p>
+                  <ul id="lightgallery2" class="list-unstyled row">
+                      <li class="item col-xs-6 col-sm-4" data-src="https://youtu.be/s-AgqGG110o" >
+                          <a class="video box-img" href="">
+                              <img class="img-responsive" src="images/gallery/thumb-1.jpg">
+                          </a>
+                          <h4 class="title-video">Lorem ipsum dolor sit amet adipis icing elit deserunt ipsa velit</h4>
+                      </li>
+                      <li class="item col-xs-6 col-sm-4" data-src="https://youtu.be/s-AgqGG110o" >
+                          <a class="video box-img" href="">
+                              <img class="img-responsive" src="images/gallery/thumb-2.jpg">
+                          </a>
+                          <h4 class="title-video">Lorem ipsum dolor sit amet adipis icing elit deserunt ipsa velit</h4>
+                      </li>
+                      <li class="item col-xs-6 col-sm-4" data-src="https://youtu.be/s-AgqGG110o" >
+                          <a class="video box-img" href="">
+                              <img class="img-responsive" src="images/gallery/thumb-13.jpg">
+                          </a>
+                          <h4 class="title-video">Lorem ipsum dolor sit amet adipis icing elit deserunt ipsa velit</h4>
+                      </li>
+                      <li class="item col-xs-6 col-sm-4" data-src="https://youtu.be/s-AgqGG110o" >
+                          <a class="video box-img" href="">
+                              <img class="img-responsive" src="images/gallery/thumb-4.jpg">
+                          </a>
+                          <h4 class="title-video">Lorem ipsum dolor sit amet adipis icing elit deserunt ipsa velit</h4>
+                      </li>
+                      <li class="item col-xs-6 col-sm-4" data-src="https://youtu.be/s-AgqGG110o" >
+                          <a class="video box-img" href="">
+                              <img class="img-responsive" src="images/gallery/thumb-4.jpg">
+                          </a>
+                          <h4 class="title-video">Lorem ipsum dolor sit amet adipis icing elit deserunt ipsa velit</h4>
+                      </li>
+                      <li class="item col-xs-6 col-sm-4" data-src="https://youtu.be/s-AgqGG110o" >
+                          <a class="video box-img" href="">
+                              <img class="img-responsive" src="images/gallery/thumb-2.jpg">
+                          </a>
+                          <h4 class="title-video">Lorem ipsum dolor sit amet adipis icing elit deserunt ipsa velit</h4>
+                      </li>
+                  </ul>
+              </div> -->
+          </section>
+      </div>
+  </div>
+  <!-- END main-wrapper -->
+{% endblock %}

@@ -1,0 +1,49 @@
+<div class="footer">
+  <div class="container">
+    <div class="left col-sm-6 col-xs-12">
+      <div class="logo-footer">
+        <img src="/uploads/{{ ('logo_footer')|getMeta }}" alt="">
+      </div>
+      <div class="address">
+        <p>{{ ('address')|getMeta }}</p>
+      </div>
+      <div class="mail">
+        <p><a href="mailto:{{ ('email')|getMeta }}">{{ ('email')|getMeta }}</a></p>
+      </div>
+      <div class="phone">
+        <p><a href="tel:{{ ('hotline_1')|getMeta }}">{{ ('hotline_1')|getMeta }}</a></p>
+      </div>
+      <div class="box-icon-social">
+        <a href="{{ ('facebook')|getMeta }}" target="_blank" title="Facebook">
+          <img src="{{ themeURI() }}/core/images/icons/social/facebook.svg" alt="">
+        </a>
+        <a href="{{ ('google')|getMeta }}" target="_blank" title="Google Plus">
+          <img src="{{ themeURI() }}/core/images/icons/social/google-plus.svg" alt="">
+        </a>
+
+      </div>
+
+    </div>
+    <div class="right col-sm-6 col-xs-12 form-contact">
+      <h5 class="text-uppercase">LIÊN HỆ VỚI CHÚNG tôi</h5>
+      <form >
+        <div class="form-group">
+          <input name="name" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Họ tên *" required>
+        </div>
+        <div class="form-group">
+          <input name="email" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Email">
+        </div>
+        <div class="form-group">
+          <input name="phone" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Số điện thoại *">
+        </div>
+        <div class="form-group">
+          <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Nội dung"></textarea>
+        </div>
+        <div class="form-group">
+          <button class="btn text-uppercase pull-right btn-send" type="submit">GỬI</button>
+        </div>
+      </form>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>

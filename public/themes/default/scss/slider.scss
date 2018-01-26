@@ -1,0 +1,18 @@
+.section-slider{
+  .owl-slider.owl-theme {
+    .owl-nav {
+      margin-top: 0;
+      div{
+        position: absolute;
+        top: 50%;
+        margin-top: -22px;
+      }
+      .owl-prev{
+        left: 10px;
+      }
+      .owl-next{
+        right: 10px;
+      }
+    }
+  }
+}

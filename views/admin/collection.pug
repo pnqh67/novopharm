@@ -1,0 +1,89 @@
+extends ./layout.pug
+
+block pre-include
+  title Nhóm sản phẩm
+  - var menu = 'product'
+  - var childMenu = 'collection'
+  
+block post-include
+  script(src=staticURI() + '/js/admin/collection.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Sản phẩm
+      li
+        a(href='/admin/collection') Nhóm sản phẩm
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      li
+        a.btn.btn-admin(href="/admin/collection/create") Tạo nhóm sản phẩm
+  section.content
+    .box.box-table
+      .row.box-header
+        h3.box-title DANH SÁCH
+      .box-body
+        table.table.nowrap.show-collection(cellspacing="0" width="100%")
+          .action-box.hidden
+            .dropdown
+              button.btn.btn-danger.dropdown-toggle(type="button" data-toggle="dropdown")
+                i.fa.fa-share
+                |  Chọn thao tác (đang chọn
+                span.num-select
+                |  nhóm sản phẩm)
+                span.caret
+              ul.dropdown-menu
+                li
+                  a.status-active(data-value='active') Ẩn
+                li
+                  a.status-inactive(data-value='inactive') Hiện
+                li
+                  a.status-delete(data-value='delete') Xóa
+          thead
+            tr
+              th.text-center
+                input.select-all(type="checkbox" style="margin-left: 15px")
+              th #
+              th Tiêu đề
+              th Mô tả
+              //th.col-sm-4 Hiển thị
+              th Chỉnh sửa
+          tbody
+            each item in collections
+              if item.parent_id == -1
+                tr(class='level' + item.parent_id)
+                  td.text-center
+                    input.checkboxes(type="checkbox" value=item.id)
+                  td
+                    a(href="/admin/collection/" + item.id, target="_blank")=item.id
+                  td
+                    a(href="/admin/collection/" + item.id, target="_blank")=item.title
+                  td=item.description
+                  td
+                    case item.status
+                      when 'active'
+                        label.label.label-info Đang hiện
+                      when 'inactive'
+                        label.label.label-warning Đang ẩn
+              -var lv = 15;
+              +listCollection(item.subcollection, lv)
+
+mixin listCollection(childs, lv)
+  if (childs.subcollection != 0)
+    each child in childs
+      tr.subcollection(data-parent_id=child.id, data-id=child.id, data-priority=child.priority)
+        td.text-center
+          input.checkboxes(type="checkbox" value=child.id)
+        td
+          a(href="/admin/collection/" + child.id, target="_blank")=child.id
+        td(style="padding-left:" + lv + 'px')
+          i.fa.fa-level-down(style="margin-right: 5px;")
+          a(href="/admin/collection/" + child.id, target="_blank")=child.title
+        td=child.description
+        td
+          case child.status
+            when 'active'
+              label.label.label-info Đang hiện
+            when 'inactive'
+              label.label.label-warning Đang ẩn
+      +listCollection(child.subcollection, lv + 15)

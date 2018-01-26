@@ -1,0 +1,23 @@
+.action-box.hidden
+    .dropdown
+        button.btn.btn-danger.dropdown-toggle(type="button" data-toggle="dropdown")
+            i.fa.fa-share
+            |  Chọn thao tác (đang chọn
+            span.num-select
+            |  sản phẩm)
+            span.caret
+        ul.dropdown-menu
+            li
+                a.status-active(data-value='active') Ẩn
+            li
+                a.status-inactive(data-value='inactive') Hiện
+            li
+                a.status-delete(data-value='delete') Xóa
+            li
+                a.add-tag(data-toggle="modal", data-target="#modal-add-tag") Thêm tag
+            li
+                a.remove-tag(data-toggle="modal", data-target="#modal-remove-tag") Xóa tag
+            li
+                a.add-colection(data-toggle="modal", data-target="#modal-add-collection") Thêm vào danh mục
+            li
+                a.delete-colection(data-toggle="modal", data-target="#modal-remove-collection") Xóa khỏi danh mục

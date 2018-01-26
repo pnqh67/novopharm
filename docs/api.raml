@@ -1,0 +1,248 @@
+#%RAML 1.0
+title: API for REST Services used in Project
+documentation:
+  - title: Overview
+    content:
+  - title: Copyright
+    content: Copyright 2017 by https://eye-solution.vn. All rights reserved.
+version: v1
+baseUri: http://localhost:9000
+# types:
+#   TestType:
+#     type: object
+#     properties:
+#       id: number
+#       optional?: string
+#       expanded:
+#         type: object
+#         properties:
+#           count: number
+/cart:
+  /getInfo:
+    get:
+      description:
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "code": 0,
+                  "data": [
+                    {
+                      "variant_id": "3",
+                      "quantity": "10",
+                      "title": "Phone 3",
+                      "variant": "Phone 3",
+                      "handle": "phone-3",
+                      "price": 4000000,
+                      "product_id": 3,
+                      "image": "1510545714_42573029-1-sz.jpg",
+                      "subTotal": 40000000,
+                      "in_stock": 1
+                    }
+                  ],
+                  "total": 40000000
+                }
+  /add:
+    post:
+      description:
+      queryParameters:
+      body:
+        application/json:
+          type: |
+            {
+              "quantity": "number",
+              "id": "number"
+            }
+          example: |
+            {
+              "quantity": 1,
+              "id": 3
+            }
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "code": 0,
+                  "data": [
+                    {
+                      "variant_id": "3",
+                      "quantity": "1",
+                      "title": "Phone 3",
+                      "variant": "Phone 3",
+                      "handle": "phone-3",
+                      "price": 4000000,
+                      "product_id": 3,
+                      "image": "1510545714_42573029-1-sz.jpg",
+                      "subTotal": 4000000,
+                      "in_stock": 1
+                    }
+                  ],
+                  "total": 4000000
+                }
+  /change:
+    post:
+      description:
+      queryParameters:
+      body:
+        application/json:
+          type: |
+            {
+              "quantity": "number",
+              "id": "number"
+            }
+          example: |
+            {
+              "quantity": 1,
+              "id": 3
+            }
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "code": 0,
+                  "data": [
+                    {
+                      "variant_id": "3",
+                      "quantity": "3",
+                      "title": "Phone 3",
+                      "variant": "Phone 3",
+                      "handle": "phone-3",
+                      "price": 4000000,
+                      "product_id": 3,
+                      "image": "1510545714_42573029-1-sz.jpg",
+                      "subTotal": 12000000,
+                      "in_stock": 1
+                    }
+                  ],
+                  "total": 12000000
+                }
+        404:
+          body:
+            application/json:
+              example: |
+                {
+                  "code": -1,
+                  "message": "Not found"
+                }
+  /clear:
+    post:
+      description:
+      queryParameters:
+      responses:
+        200:
+          body:
+            application/json:
+              type: |
+                {
+                  "quantity": "number",
+                  "id": "number"
+                }
+              example: |
+                {
+                  "quantity": 1,
+                  "id": 3
+                }
+
+/product:
+  /{handle}:
+    get:
+      description:
+      queryParameters:
+        handle: string
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "code": 0,
+                  "data": {
+                    "id": 7,
+                    "title": "Phone 7",
+                    "title_en": "",
+                    "handle": "phone-7",
+                    "handle_en": "phone-7",
+                    "featured_image": "1510545752_md05803029-350x350.jpg",
+                    "inventory_management": 1,
+                    "in_stock": 0,
+                    "description": "abc",
+                    "description_en": "",
+                    "content": "<p>abc</p>",
+                    "content_en": "",
+                    "sell": 0,
+                    "stock": 0,
+                    "view": 1,
+                    "status": "active",
+                    "created_at": "2017-11-13 11:05:34",
+                    "updated_at": "2017-11-13 11:05:34"
+                  }
+                }
+/search:
+  get:
+    description: |
+      Type 1: GET /search?type={TYPE}&q={YOUR TEXT} |
+      Type 2: GET /search?type={TYPE}&filter={FILTER1};{FILTER2};{FILTER3} |
+      If q and filter is empty, then get all data table in type
+    queryParameters:
+      type:
+        description: Table name article, page, blog, collection, product (default = product)
+      q:
+        description: Title search
+      filter:
+        description: |
+          {FILTER1}&&{FILTER2}&&{FILTER3}. FILTER<n> =  <field><operator><value> |
+          Operator: |
+            Number: <>, <, >, <=, >=, =, IN (in array, syntax example: [1,2,3]) |
+            String: \*= (start with value), =\* (end with value), \*\* (contain value), IN (in array, syntax example: [1,2,3]) |
+          field: column search |  
+          value: title search, is number when product.price and product.collectionId, is string all case remain"
+        example: |
+          {
+            /search?type=product (get all table product)
+            /search?type=product&filter=title=*5 (get data table product, with condition title end 5)
+            /search?type=product&filter=title*=5 (get data table product, with condition title start 5)
+            /search?type=product&filter=title=*5&&description*=a (get data table product, with condition title end 5, description start by a)
+          }
+    responses:
+      200:
+        description: /search?type=article&filter=title=*hanh&&content**eum
+        body:
+          application/json:
+            example: |
+              {
+                "code": 0,
+                "message": "success",
+                "data": [
+                  {
+                    "id": 2,
+                    "blog_id": 3,
+                    "title": "Chính sách bảo hành",
+                    "title_en": "",
+                    "handle": "chinh-sach-bao-hanh",
+                    "handle_en": "",
+                    "description": "in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.",
+                    "description_en": "",
+                    "content": "<pre>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.\n\nUt wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.\n<img src=\"http://shop.eyeteam.vn/images/1510645916-99a2e028b85335cf7989baffe4ed9a91.jpg\" alt=\"\" width=\"441\" height=\"662\" />\nNam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.\n\nDuis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.\n<img src=\"http://shop.eyeteam.vn/images/1510803796-4_469948.jpg\" alt=\"\" width=\"608\" height=\"430\" />\nAt vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat. \n\nConsetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</pre>",
+                    "content_en": "",
+                    "image": "chinh-sach-bao-hanh.jpg",
+                    "status": "active",
+                    "view": 2,
+                    "created_at": "2017-11-16 11:57:57",
+                    "updated_at": "2017-11-16 11:57:57"
+                  }
+                ]
+              }
+      404:
+        body:
+          application/json:
+            example: |
+              {
+                "code": -1,
+                "message": "Not found"
+              }

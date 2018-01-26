@@ -1,0 +1,68 @@
+extends ./layout.pug
+
+block pre-include
+  - var menu = 'setting';
+  - var childMenu = 'shipping_fee';
+  title Chỉnh sửa phí vận chuyển
+
+block post-include
+  script(src=staticURI() + '/js/admin/shipping_fee.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Cấu hình
+      li
+        a Phí vận chuyển
+      li
+        a Chỉnh sửa phí vận chuyển
+  section.content.shipping-fee
+    .row
+      h3.text-primary.title(style="padding-left: 20px") Chỉnh sửa phí vận chuyển
+      .col-sm-8.col-xs-12
+        div.text-right(style="width: 100%;")
+          button.btn.btn-primary.btn-shipping-add(data-toggle="modal", data-target="#modal-subregion") Thêm Phương thức &nbsp;
+            i.fa.fa-plus
+        .row(style="margin-top: 20px")
+          .col-sm-12.box-shipping-fee
+            if shippingfee
+              each item in shippingfee
+                .box
+                  .form-horizontal
+                    .box-title.clearfix
+                      .col-xs-12.title=item.title
+                    .box-body
+                      if item.type == 'amount'
+                        p Tính theo: Khối lượng (kg)
+                        p Áp dụng cho đơn hàng có khối lượng từ #{item.from}kg đến #{item.to}kg
+                      if item.type == 'price'
+                        p Tính theo: Khoảng giá (VNĐ)
+                        p Áp dụng cho đơn hàng có tổng giá trị từ #{money(item.from)} đến #{money(item.to)}
+                      p Chi phí: #{money(item.price)}
+                      .col-sm-4.col-sm-offset-8
+                        .btn-toolbar
+                          button.btn.btn-success.btn-edit-shipping-fee(data-id=item.id data-toggle="modal" data-target="#modal-subregion")
+                            i.fa.fa-pencil-square-o &ensp;
+                            | Chỉnh sửa
+                          button.btn.btn-danger.btn-remove-shipping(data-id=item.id)
+                            i.fa.fa-trash &ensp;
+                            | Xóa
+
+      .col-sm-4.col-xs-12
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-6.title TỈNH / THÀNH PHỐ
+            .box-body
+              .form-group
+                .col-sm-12
+                  .list-region.clearfix
+                    select.chosen-select(data-placeholder="Mời chọn tỉnh/thành phố")
+                      option(value=-1) Mời chọn tỉnh/Thành phố...
+                      each region in regions
+                        if region.id == regionid
+                          option(value=region.id selected)=region.name
+                        else
+                          option(value=region.id)=region.name
+    include snippet/modal-subregion

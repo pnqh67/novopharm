@@ -1,0 +1,47 @@
+{% extends "layout.twig" %}
+{% block pre_include %}
+  <title>{{ blog.title }}</title>
+  {% if fb_image %}
+    {% set ogImage = fb_image %}
+  {% endif %}
+  {% if blog.meta_description %}
+    {% set metaDescription = blog.meta_description %}
+  {% endif %}
+  {% if blog.meta_robots %}
+    {% set meta_robots = blog.meta_robots %}
+  {% endif %}
+  {% set metaTitle = blog.title %}
+{% endblock pre_include %}
+
+{% block post_include %}
+  <script src="{{themeURI()}}/libs/twbsPagination.min.js"></script>
+{% endblock post_include %}
+
+{% block content %}
+<!-- BEGIN main-wrapper -->
+<div class="main-wrapper main-wrapper2 container">
+  <div class="bg-main">
+    <section class="blog-wrapper">
+      {% if blog['articles']|countArr %}
+        {% for item in blog['articles'] %}
+          <div class="row item">
+            <div class="left col-sm-4 col-xs-12">
+              <div >
+                <a class="box-img" href="/bai-viet/{{ item.handle }}">
+                  <img src="/uploads/{{ item.image }}" alt="{{ item.title }}">
+                </a>
+              </div>
+            </div>
+            <div class="right col-sm-8 col-xs-12">
+              <h3 class="title-blog"><a href="/bai-viet/{{ item.handle }}">{{ item.title }}</a></h3>
+              <p class="desc"> {{ item.description }}</p>
+              <a class="view-more" href="/bai-viet/{{ item.handle }}">Xem thêm</a>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </section>
+  </div>
+</div>
+<!-- END main-wrapper -->
+{% endblock content %}

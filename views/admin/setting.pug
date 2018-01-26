@@ -1,0 +1,45 @@
+extends ./layout.pug
+block pre-include
+  - var menu = 'setting'
+  - var childMenu = 'setting'
+  title Thiết lập chung
+
+block post-include
+  script(src=staticURI() + '/js/admin/setting.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Thiết lập chung
+      li
+        a Website
+        
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      span.middle-inline-block
+      li
+        a.btn.btn-admin.btn-update-setting-website
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Lưu lại
+  section.content#content(style="padding-bottom:150px")
+  //section(style="padding-bottom:30px")
+  //  .box.addToContent(style="padding:20px 0")
+  //    .form-group.clearfix
+  //      .col-xs-12.col-sm-4
+  //        input.form-control(placeholder='Name')
+  //      .col-xs-12.col-sm-3
+  //        select.form-control.type-item
+  //          option(value=0) Chọn loại cần thêm
+  //          option(value='block') Block
+  //          option(value='input') Input
+  //          option(value='select') Select
+  //          option(value='image') Image
+  //          option(value='textarea') Textarea
+  //          option(value='text') Text
+  //      .col-xs-12.col-sm-3
+  //        select.form-control.num-block
+  //      .col-xs-12.col-sm-2
+  //        button.addItem.btn.btn-success
+  //          i.fa.fa-plus
+  //          |  Thêm

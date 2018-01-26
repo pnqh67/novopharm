@@ -1,0 +1,17 @@
+vendor
+cache/*.php
+*.log
+.DS_Store
+scss/scss_cache
+public/uploads
+public/images
+public/test
+public/excel
+.env
+composer.lock
+node_modules
+public/*.xml
+public/cache
+package-lock.json
+.idea
+docs/build

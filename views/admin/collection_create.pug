@@ -1,0 +1,107 @@
+extends ./layout.pug
+
+block pre-include
+  title Tạo nhóm sản phẩm
+  - var menu = 'product'
+  - var childMenu = 'collection'
+block post-include
+  script(src=staticURI() + '/js/admin/collection.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Sản phẩm
+      li
+        a(href='/admin/collection') Nhóm sản phẩm
+      li
+        a Tạo mới
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      li
+        a.btn.btn-admin.btn-create-update
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Lưu lại
+  section.content
+    .row
+      .col-sm-9.col-xs-12.box-left
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-6.title THÔNG TIN
+              ul.nav.nav-tabs.nav-tabs-lang.col-xs-6
+                li.active
+                  a(data-toggle='tab', href='#tab-vi') Tiếng Việt
+                li
+                  a(data-toggle='tab', href='#tab-en') Tiếng Anh
+            .box-body
+              .tab-content
+                #tab-vi.tab-pane.fade.in.active
+                  .form-group
+                    .col-sm-2.control-label Tên nhóm
+                      strong.required  *
+                    .col-sm-10
+                      input.title.form-control(name="title", placeholder="Tên nhóm sản phẩm")
+                  .form-group
+                    .col-sm-2.control-label Đường dẫn
+                      strong.required  *
+                    .col-sm-10
+                      .input-group
+                        span.input-group-addon#basic-addon3=currentHost() + '/nhom-san-pham/'
+                        input.form-control.handle(aria-describedby="basic-addon3", name="handle", placeholder="duong-dan")
+                  .form-group
+                    .col-sm-2.control-label Mô tả
+                    .col-sm-10
+                      textarea.form-control(name="description", placeholder="Mô tả ngắn")
+                  .form-group
+                    .col-sm-2.control-label Nội dung
+                    .col-sm-10
+                      textarea.form-control#content(placeholder="Nội dung")
+                #tab-en.tab-pane.fade
+                  .form-group
+                    .col-sm-2.control-label Tên nhóm
+                    .col-sm-10
+                      input.form-control.title(name="title_en", placeholder="Collection name")
+                  .form-group
+                    .col-sm-2.control-label Đường dẫn
+                    .col-sm-10
+                      .input-group
+                        span.input-group-addon#basic-addon3=currentHost() + '/en/collection/'
+                        input.form-control.handle(aria-describedby="basic-addon3", name="handle_en", placeholder="url")
+                  .form-group
+                    .col-sm-2.control-label Mô tả
+                    .col-sm-10
+                      textarea.form-control(name="description_en", placeholder="Description")
+                  .form-group
+                    .col-sm-2.control-label Nội dung
+                    .col-sm-10
+                      textarea.form-control#content_en
+        include snippet/box-seo.pug
+      .col-sm-3.col-xs-12.box-right
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-12.title NHÓM SẢN PHẨM CHA
+            .box-body
+              select.form-control(name="parent_id")
+                option(value="" selected) Chọn nhóm sản phẩm cha...
+                each item in collections
+                  option(value=item.id, data-breadcrumb=item.breadcrumb, data-link=item.link)=item.breadcrumb
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-12.title HÌNH ĐẠI DIỆN
+            .box-body
+              .item-choose-image(data-default=staticURI() + "/img/default.jpg")
+                img(src=staticURI() + "/img/default.jpg")
+                span.remove-image
+                  i.fa.fa-times
+                input.value(type="hidden" name="image")
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-12.title TRẠNG THÁI
+            .box-body
+              select.form-control(name="status")
+                option(value="active") Hiển thị
+                option(value="inactive") Ẩn

@@ -1,0 +1,96 @@
+extends ./layout.pug
+
+block pre-include
+  - var menu = 'comment';
+  - var childMenu = 'comment_all';
+  title Bình luận
+  //link(rel="stylesheet" href=staticURI() + "/libs/jquery-ui.min.css")
+  
+block post-include
+  script(src=staticURI() + '/js/admin/comment.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Bình luận
+      li
+        a Danh sách
+  section.content.clearfix
+    .box.box-table
+      .box-header
+        h3.box-title DANH SÁCH
+      .box-body
+        table.table.table-striped.display.nowrap(cellspacing="0" width="100%")
+          .action-box.hidden
+            .dropdown
+              button.btn.btn-danger.dropdown-toggle(type="button" data-toggle="dropdown")
+                i.fa.fa-share
+                |  Chọn thao tác (đang chọn
+                span.num-select
+                |  mã giảm giá)
+                span.caret
+              ul.dropdown-menu
+                li
+                  a.status-active(data-value='active') Ẩn
+                li
+                  a.status-inactive(data-value='inactive') Hiện
+                li
+                  a.status-delete(data-value='delete') Xóa
+          thead
+            tr
+              th.text-center
+                input.select-all(type="checkbox" style="margin-left: 15px")
+              th Mã
+              th Nội dung
+              th Tên
+              th Thời gian
+              th Trạng thái
+          tbody
+            each item in comments
+              tr
+                td.text-center
+                  input.checkboxes(type="checkbox" value=item.id)
+                td=item.id
+                td.menu-content(data-value=item.content)=item.content
+                td.menu-name(data-value=item.name)=item.name
+                td.menu-created(data-value=item.created_at)=item.created_at
+                td
+                  case item.status
+                    when 'active'
+                      label.label.label-info Đang hiện
+                    when 'inactive'
+                      label.label.label-warning Đang ẩn
+        script.
+              $('tbody').sortable({
+                cancel: '.parentMenu'
+              });
+      #modal-update.modal.fade(role="dialog")
+        .modal-dialog
+          .modal-content
+            .modal-header
+              button.close(type='button', data-dismiss='modal') ×
+              h4.modal-title Sửa comment
+            .modal-body
+              .form-horizontal.clearfix
+                .form-group.clearfix
+                  label.col-sm-2.control-label Name
+                    strong.required  *
+                  .col-sm-10
+                    input.form-control(name="name" placeholder="")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Điện thoại
+                  .col-sm-10
+                    input.form-control(name="phone" placeholder="")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Email
+                  .col-sm-10
+                    input.form-control(name="email" placeholder="")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Nội dung
+                    strong.required  *
+                  .col-sm-10
+                    input.form-control(name="content" placeholder="")
+              .modal-footer
+                button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+                button.btn.btn-primary.btn-update-comment Sửa comment

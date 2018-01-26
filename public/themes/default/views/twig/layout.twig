@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="icon" href="/uploads/{{('favicon')|getMeta}}">
+  
+  {% set metaTitle = 'meta_title_default' | getMeta %}
+  {% set metaDescription = 'meta_description_default' | getMeta %}
+  {% set ogImage = 'facebook_image' | getMeta %}
+  {% set ogImage = '/uploads/' ~ ogImage %}
+  {% set metaTitle = "Meta title" %}
+
+  {% block pre_include %}
+  {% endblock %}
+
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ metaTitle }}">
+  <meta property="og:description" content="{{ metaDescription }}">
+  <meta name="description" content="{{ metaDescription }}">
+  <meta property="og:url" content="{{currentHost()}}{{currentUrl()}}">
+  <meta property="og:image" content="{{ ogImage }}">
+  <!-- css -->
+  <link rel="stylesheet" href="{{ themeURI() }}/core/css/font-awesome.css">
+  <link href="https://fonts.googleapis.com/css?family=Cinzel" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Patrick+Hand+SC" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{{ themeURI() }}/core/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="{{ themeURI() }}/core/css/owl.carousel.min.css" />
+  <link rel="stylesheet" type="text/css" href="{{ themeURI() }}/core/css/owl.theme.default.min.css" />
+  <link rel="stylesheet" type="text/css" href="{{ themeURI() }}/core/css/toastr.css" />
+  <link rel="stylesheet" type="text/css" href="{{ themeURI() }}/core/css/style.css" />
+
+</head>
+<body>
+  <div id="full-page">
+    {% include "masterpage/header.twig" %}
+    <div class="bg-page">
+      <div class="bg-kid">
+        {% set sliders = "slider" | getSlider %}
+        {% if sliders | countArr %}
+          <div class="home-slider container-fluid">
+            
+            <div class="box-slider-owl">
+              <div class="banner-owl-carousel owl-carousel owl-loaded owl-drag">
+                {% for item in sliders %}
+                  <div class="item">
+                    <img src="/uploads/{{ item.image }}" alt="{{ item.title }}">
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+        <!-- BEGIN main-wrapper -->
+        {% block content %}{% endblock %}
+        <!-- END main-wrapper -->
+        {% include "masterpage/footer.twig" %}
+        <!-- END footer -->
+      </div>
+    </div>
+    <div class="fb-livechat">
+      <div class="ctrlq fb-overlay"></div>
+      <div class="fb-widget">
+        <div class="ctrlq fb-close"></div>
+        <div class="fb-page" data-href="{{('facebook_url')|getMeta}}" data-tabs="messages" data-width="360" data-height="400" data-small-header="true" data-hide-cover="true" data-show-facepile="false"> </div>
+        <div class="fb-credit"> <a href="www.laziweb.com" target="_blank">Powered by Laziweb</a> </div>
+        <div id="fb-root"></div>
+      </div>
+      <a href="{{('facebook_url')|getMeta}}" title="Gửi tin nhắn cho chúng tôi qua Facebook" class="ctrlq fb-button">
+        <div class="bubble">1</div>
+        <div class="bubble-msg">Bạn cần hỗ trợ?</div>
+      </a>
+    </div>
+    <div class="buy-cart-product ">
+      <table>
+        <tbody>
+          <tr>
+            <td class="icon-phone">
+              <a href="tel:{{ ('hotline1')|getMeta }}"><i class="fa fa-phone" style=""></i></a>
+            </td>
+            <td class="hotline" style="">
+              <a href="tel:{{ ('hotline1')|getMeta }}" >
+                <span >Tổng đài tư vấn</span>
+                <br>
+                {{ ('hotline1')|getMeta }}
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- END full-page -->
+  <script type="text/javascript" src="{{ themeURI() }}/core/js/jquery.min.js"></script>
+  <script type="text/javascript" src="{{ themeURI() }}/core/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="{{ themeURI() }}/core/js/owl.carousel.min.js"></script>
+  <script type="text/javascript" src="{{ themeURI() }}/core/js/toastr.min.js"></script>
+  <script type="text/javascript" src="{{ themeURI() }}/core/js/script.js"></script>
+
+  <script src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.9"></script>
+  <script>
+    $(document).ready(function() {
+      function detectmob() {
+        if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i)) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+      var t = {
+        delay: 125,
+        overlay: $(".fb-overlay"),
+        widget: $(".fb-widget"),
+        button: $(".fb-button")
+      };
+      setTimeout(function() {
+        $("div.fb-livechat").fadeIn()
+      }, 8 * t.delay);
+      if (!detectmob()) {
+        $(".ctrlq").on("click", function(e) {
+          e.preventDefault(), t.overlay.is(":visible") ? (t.overlay.fadeOut(t.delay), t.widget.stop().animate({
+            bottom: 0,
+            opacity: 0
+          }, 2 * t.delay, function() {
+            $(this).hide("slow"), t.button.show()
+          })) : t.button.fadeOut("medium", function() {
+            t.widget.stop().show().animate({
+              bottom: "30px",
+              opacity: 1
+            }, 2 * t.delay), t.overlay.fadeIn(t.delay)
+          })
+        })
+      }
+    });
+  </script>
+  {% block post_include %}
+  {% endblock %}
+
+</body>
+</html>

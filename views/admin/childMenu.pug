@@ -1,0 +1,241 @@
+extends ./layout.pug
+
+block pre-include
+  - var menu = 'setting';
+  - var childMenu = 'menu';
+  title=parentMenu.title
+  
+block post-include
+  script(src=staticURI() + '/js/admin/menu.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Cấu hình
+      li
+        a(href="/admin/menu") Menu
+      li
+        a=parentMenu.title
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      span.middle-inline-block
+      li
+        a.btn.btn-admin(data-toggle="modal" data-target="#modal-create") Tạo menu
+  section.content.clearfix
+    .box.box-table
+      .row.box-header
+        h3.box-title='DANH SÁCH ' + parentMenu.title + ' '
+          span.label.label-primary=parentMenu.handle
+      .box-body
+        //each item in data
+        //  if (item.parent_id == -1)
+        //    .panel.panel-default
+        //      .panel-heading
+        //        span=item.title
+        //      .panel-body
+        //        ul.list-unstyled
+        //          -var childMenus = item.submenu
+        //          -var breadcrumb = item.title
+        //          each child in item.submenu
+        //            li(style="padding: 0 0 40px 0")
+        //              .pull-left
+        //                i.fa.fa-arrows
+        //                span=' ' + child.title
+        //              .pull-right
+        //                a.btn.btn-default='Thêm menu con'
+        //      .panel-footer.clearfix
+        //        a.btn.btn-default=X
+        //        a.btn.btn-default.pull-right='Chỉnh sửa ' + item.title
+        //    +showChildMenu(childMenus, breadcrumb)
+
+        table.table.nowrap(cellspacing="0" width="100%")
+          .action-box.hidden
+            .dropdown
+              button.btn.btn-danger.dropdown-toggle(type="button" data-toggle="dropdown")
+                i.fa.fa-share
+                |  Chọn thao tác (đang chọn
+                span.num-select
+                |  menu)
+                span.caret
+              ul.dropdown-menu
+                li
+                  a.status-active(data-value='active') Ẩn
+                li
+                  a.status-inactive(data-value='inactive') Hiện
+                li
+                  a.btn-remove-menu Xóa
+          thead
+            tr
+              th.text-center
+                input.select-all(type="checkbox" style="margin-left: 15px")
+              th STT
+              th Tiêu đề
+              th Link
+              th Trạng thái
+              //th Hành động
+          - var stt = 1
+          tbody
+            each item in data
+              if item.submenu
+                - var submenu = count(item.submenu)
+              else
+                - var submenu = 0
+              tr.parentMenu(style="background-color: #eee;", data-id=item.id, data-parent_id=item.id, data-submenu=submenu, data-priority=item.priority)
+                td.text-center
+                  input.checkboxes(type="checkbox" value=item.id)
+                td=stt++
+                td.menu-title(data-value=item.title)
+                  a.btn-edit-menu(data-id=item.id data-toggle="modal" data-target="#modal-update")=item.title
+                td.menu-link(data-value=item.link, data-type=item.link_type)
+                  if item.link_type == 'custom'
+                    a(href="!{item['link']}" target="_blank")=item.link
+                  else
+                    a(href="/!{item['link']}" target="_blank")=item.link
+                td
+                  case item.status
+                    when 'active'
+                      label.label.label-info Đang hiện
+                    when 'inactive'
+                      label.label.label-warning Đang ẩn
+                //td
+                //  a.btn-edit.btn-edit-menu(data-id=item.id, title="Chỉnh sửa")
+                //    i.fa.fa-pencil-square-o
+                //  a.btn-remove.btn-remove-menu(data-id=item.id, title="Xóa")
+                //    i.fa.fa-trash
+                - var lv = 15
+                +listMenu(item.submenu, lv)
+
+      #modal-create.modal.fade(role="dialog")
+        .modal-dialog
+          .modal-content
+            .modal-header
+              button.close(type='button', data-dismiss='modal') ×
+              h4.modal-title Tạo menu
+            .modal-body
+              .form-horizontal.clearfix
+                .form-group.clearfix
+                  label.col-sm-2.control-label Menu cha
+                  .col-sm-10
+                    select.form-control(name="parent_id")
+                      option(value=parentMenu.id selected) Không chọn menu cha
+                      each temp in data
+                        option(value=temp.id, data-priority=temp.priority)=temp.title
+                        +selectListMenu(temp.submenu, "--")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Tiêu đề
+                    strong.required  *
+                  .col-sm-10
+                    input.form-control(name="title" placeholder="Giày công sở")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Tiêu đề EN
+                  .col-sm-10
+                    input.form-control(name="title_en" placeholder="Giày công sở")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Link
+                  .col-sm-10.menu-link
+                    .row
+                      .col-sm-6.key
+                        select.form-control(name="menu-type")
+                          option(value="collection" selected) Nhóm sản phẩm
+                          option(value="blog") Nhóm bài viết
+                          option(value="article") Bài viết
+                          option(value="page") Trang nội dung
+                          option(value="custom") Địa chỉ web
+                      .col-sm-6.value
+                        select.form-control(name="menu-collection")
+                          each item in collection
+                            option(value='/nhom-san-pham/' + item.handle)=item.breadcrumb
+                        select.hidden.form-control(name="menu-blog")
+                        select.hidden.form-control(name="menu-article")
+                        select.hidden.form-control(name="menu-page")
+                        input.hidden.form-control(name="menu-link" placeholder="https://example.vn")
+              .modal-footer
+                button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+                button.btn.btn-primary.btn-create-menu Tạo menu
+      #modal-update.modal.fade(role="dialog")
+        .modal-dialog
+          .modal-content
+            .modal-header
+              button.close(type='button', data-dismiss='modal') ×
+              h4.modal-title Cập nhật menu
+            .modal-body
+              .form-horizontal.clearfix
+                .form-group.clearfix
+                  label.col-sm-2.control-label Menu cha
+                  .col-sm-10
+                    select.form-control(name="parent_id")
+                      option(value=parentMenu.id selected) Không chọn menu cha
+                      each temp in data
+                        option(value=temp.id, data-priority=temp.priority)=temp.title
+                        +selectListMenu(temp.submenu, "--")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Tiêu đề
+                    strong.required  *
+                  .col-sm-10
+                    input.form-control(name="title" placeholder="Giày công sở")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Tiêu đề EN
+                  .col-sm-10
+                    input.form-control(name="title_en" placeholder="Giày công sở")
+                .form-group.clearfix
+                  label.col-sm-2.control-label Link
+                  .col-sm-10.menu-link
+                    .row
+                      .col-sm-6.key
+                        select.form-control(name="menu-type")
+                          option(value="collection") Nhóm sản phẩm
+                          option(value="blog") Nhóm bài viết
+                          option(value="article") Bài viết
+                          option(value="page") Trang nội dung
+                          option(value="custom") Địa chỉ web
+                      .col-sm-6.value
+                        select.form-control(name="menu-collection")
+                          each item in collection
+                            option(value='/nhom-san-pham/' + item.handle)=item.breadcrumb
+                        select.hidden.form-control(name="menu-blog")
+                          each item in blog
+                            option(value='/nhom-bai-viet/'+item.handle)=item.title
+                        select.hidden.form-control(name="menu-article")
+                          each item in article
+                            option(value='/bai-viet/' + item.handle)=item.title
+                        select.hidden.form-control(name="menu-page")
+                          each item in page
+                            option(value='/trang-noi-dung/' + item.handle)=item.title
+                        input.hidden.form-control(name="menu-link" placeholder="https://example.vn")
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+              button.btn.btn-primary.btn-update-menu Cập nhật
+
+  mixin listMenu(childs, lv)
+    if (childs.submenu != 0)
+      each child in childs
+        tr.submenu(data-parent_id=item.id, data-id=child.id, data-priority=child.priority)
+          td.text-center
+            input.checkboxes(type="checkbox" value=child.id)
+          td=stt++
+          td.menu-title(data-value=child.title style="padding-left:" + lv + "px")
+            i.fa.fa-level-down(style="margin-right: 5px;")
+            a.btn-edit-menu(data-id=child.id data-toggle="modal" data-target="#modal-update")=child.title
+          td.menu-link(data-value=child.link, data-type=child.link_type)
+            if child.link_type == 'custom'
+              a(href=currentHost() + child.link target="_blank")=child.link
+            else
+              a(href=currentHost() + child.link target="_blank")=child.link
+          td
+            case child.status
+              when 'active'
+                label.label.label-info Đang hiện
+              when 'inactive'
+                label.label.label-warning Đang ẩn
+          //td
+          //  a.btn-edit.btn-edit-menu(data-id=item.id, title="Chỉnh sửa")
+          //    i.fa.fa-pencil-square-o
+          //  a.btn-remove.btn-remove-menu(data-id=item.id, title="Xóa")
+          //    i.fa.fa-trash
+        +listMenu(child.submenu, lv + 15)
+
+  mixin selectListMenu(childs, space)
+    if (childs.submenu != 0)
+      each child in childs
+        option(value=child.id)=space + child.title
+        +selectListMenu(child.submenu, space + "--")

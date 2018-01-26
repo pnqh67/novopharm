@@ -1,0 +1,63 @@
+.header-mobile.hidden-sm.hidden-md
+  nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
+    .container
+      .navbar-header
+        button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar').button-menu-mobile
+          span.sr-only Menu
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand
+          img(src=staticURI() + '/img/lazi-logo.png')
+      #navbar.navbar-collapse.collapse(aria-expanded='false', style='height: 1px;')
+        ul.nav.navbar-nav
+          li
+            a.dropdown-toggle(href='#', data-toggle='dropdown')
+              | Sản phẩm
+              span.caret
+            ul.dropdown-menu(role='menu')
+              li
+                a(href='/admin/product/new') Thêm sản phẩm
+              li
+                a(href='/admin/collection') Nhóm sản phẩm
+              li
+                a(href='/admin/product') Danh sách sản phẩm
+              li
+                a(href='/admin/attribute') Thuộc tính
+              li
+                a(href='/admin/price') Bộ lọc giá
+          li
+            a(href='/admin/order') Đơn hàng
+            
+          li
+            a(href='/admin/customer') Khách hàng
+          li
+            a.dropdown-toggle(href='#', data-toggle='dropdown')
+              | Bài viết
+              span.caret
+            ul.dropdown-menu(role='menu')
+              li
+                a(href='/admin/blogs') Blog
+              li
+                a(href='/admin/articles') Bài viết
+              li
+                a(href='/admin/pages') Trang nội dung
+          li
+            a.dropdown-toggle(href='#', data-toggle='dropdown')
+              | Thiết lập
+              span.caret
+            ul.dropdown-menu(role='menu')
+              li
+                a(href='/admin/setting') Website
+              li
+                a(href='/admin/slider') Slider
+              li
+                a(href='/admin/menu') Menu 
+              li
+                a(href='/admin/images') Hình ảnh
+          li
+            a(href='/admin/user') Nhân viên
+          li
+            a(data-toggle="modal" data-target="#modal-change-password" href="#" ) Đổi mật khẩu
+          li
+            a(href='/admin/logout') Đăng xuất

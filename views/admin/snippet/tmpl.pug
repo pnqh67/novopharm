@@ -1,0 +1,128 @@
+script#item-image(type="text/x-tmpl").
+   <div class="image col-xs-6 col-sm-2" data-index="{%=o.index%}" style="background-image:url('{%=o.src%}');">
+    <span class="rotate">
+      <i class="fa fa-undo"></i>
+    </span>
+    <span class="remove remove-base64-img">
+      <i class="fa fa-times"></i>
+    </span>
+  </div>
+  
+script#add-item-image(type="text/x-tmpl").
+   <div class="image col-xs-6 col-sm-2" data-name="{%=o.name%}" style="background-image:url('{%=o.src%}');">
+    <span class="rotate" data-name="{%=o.name%}">
+      <i class="fa fa-undo"></i>
+    </span>
+    <span class="remove">
+      <i class="fa fa-times"></i>
+    </span>
+  </div>
+  
+script#item-upload-image(type="text/x-tmpl").
+  <div class="col-xs-2 image">
+    <div class="item" style="background: url('{%=o.src%}')" data-src="{%=o.image%}">
+      <span class="remove-image">
+        <i class="fa fa-times"></i>
+      </span>
+    </div>
+  </div>
+
+script#item-location(type="text/x-tmpl").
+  <div class="row no-padding">
+    <div class="col-xs-12">
+      <label>Địa chỉ {%=o%}</label>
+      <div class="pull-right"><a title="Xóa" class="btn-remove btn-remove-item-location"><i class="fa fa-trash"></i></a></div>
+    </div>
+    <div class="form-group col-xs-12 col-sm-7">
+      <div class="input-group"><span class="input-group-addon">
+          <label style="color: grey; font-weight: normal">Tên</label></span>
+        <input name="name" class="form-control"/>
+      </div>
+    </div>
+    <div class="form-group col-xs-12 col-sm-5">
+      <div class="input-group"><span class="input-group-addon">
+          <label style="color: grey; font-weight: normal">SĐT</label></span>
+        <input name="phone" class="form-control"/>
+      </div>
+    </div>
+    <div class="form-group col-sm-12">
+      <div class="input-group"><span class="input-group-addon">
+          <label style="color: grey; font-weight: normal">Địa chỉ</label></span>
+        <input name="address" class="form-control"/>
+      </div>
+    </div>
+  </div>
+
+script#sale-item-product-content(type="text/x-tmpl").
+  <div class="row">
+      <div class="col-xs-9">
+          <select name="sleproduct" class="form-control chosen-select-product" data-placeholder="Mời chọn sản phẩm...">
+              <option value="">Mời chọn sản phẩm...</option>
+          </select>
+      </div>
+      <div class="col-xs-3">
+          <button class="btn btn-danger btn-remove-product">Xóa &ensp;
+              <i class="fa fa-close"></i>
+          </button>
+      </div>
+  </div>
+
+script#sale-item-product-option(type="text/x-tmpl").
+  <option value='{%=o.id%}'>{%=o.title%}</option>
+
+script#subregion-option(type="text/x-tmpl").
+  <option value='{%=o.id%}'>{%=o.name%}</option>
+
+script#attribute-option(type="text/x-tmpl").
+  <option value='{%=o%}'>{%=o%}</option>
+
+script#add-row-attribute(type="text/x-tmpl").
+  <div style="margin-bottom: 10px" class="row">
+    <div class="col-sm-3">
+      <select class="form-control select-attribute">
+        {%#o%}
+      </select>
+    </div>
+    <div class="col-sm-8">
+      <select data-placeholder="Chọn giá trị thuộc tính" multiple="multiple" class="chosen-select">
+      </select>
+    </div>
+    <a class="btn-remove-attribute"><i class="fa fa-trash"></i></a>
+  </div>
+script#add-variant(type="text/x-tmpl").
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="pull-left">
+        <input type="checkbox" checked class="check-variant"/>
+      </div>
+      <div class="control-label">{%=o%}</div>
+    </div>
+    <div class="col-sm-9">
+      <div class="list-variant clearfix">
+        <div class="variant-item clearfix">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="row">
+                <div class="col-sm-4 pd-right-5">
+                  <input type="number" name="variant-price" placeholder="Giá" min="1" class="form-control"/>
+                </div>
+                <div class="col-sm-4 pd-left-5 pd-right-5">
+                  <input type="number" name="variant-price-compare" placeholder="Giá so sánh" min="1" class="form-control"/>
+                </div>
+                <div class="col-sm-4 pd-left-5">
+                  <input type="number" name="variant-inventory" placeholder="Tồn kho" min="1" class="form-control"/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 variant-images">
+              <div class="col-xs-12 list-image choose-image-variant">
+                <div class="col-xs-3 col-sm-2 add-image"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

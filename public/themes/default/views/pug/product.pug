@@ -1,0 +1,121 @@
+extends ./layout.pug
+
+block pre-include
+  title=data.title
+  - var metaTitle = data.title
+  if data.meta_description
+    - var metaDescription = data.meta_description;
+  if data.meta_robots
+    - var meta_robots = data.meta_robots;
+  - var ogImage = data.ogImage;
+  link(rel='stylesheet', href=themeURI() + '/libs/owl.carousel.min.css')
+  link(rel='stylesheet', href=themeURI() + '/libs/owl.carousel.min.css')
+block post-include
+  script(src=themeURI() + '/libs/owl.carousel.min.js')*/
+  script(src=themeURI() + '/libs/elevatezoom.min.js')
+  link(rel='stylesheet', href=themeURI() + '/libs/slick.css')
+  script(src=themeURI() + '/libs/swiper.min.js')
+  script(src=themeURI() + '/libs/jquery-migrate-1.2.1.min.js')
+  script(src=themeURI() + '/libs/slick.js')
+  
+block content
+  .container.product-wrapper
+    .product.clearfix
+      .col-sm-7.col-xs-12.list-image
+        .col-sm-2.hidden-xs.pd-left-0.pd-right-0
+          .slide-small-image
+            each image in list_images
+              - var thumb = '/uploads/' + resize(image.name, 240);
+              - var large = '/uploads/' + resize(image.name, 1024);
+              - var alt = data.title + '-' + (index + 1);
+              .item(data-large=large, data-full='/uploads/' + image.name, data-id=image.type_id)
+                img(src=thumb)
+        if device == 'desktop'
+          .col-sm-10.col-xs-12.slider-large-image.text-center
+            - var large = resize(data.featured_image, 1024);
+            img.large-image-zoom(src="/uploads/" + large, data-zoom-image="/uploads/" + data.featured_image, alt=alt)
+        else
+          .col-xs-12.slider-large-image.slider-large-image-mobile.text-center
+            .owl-carousel.owl-carousel-product-mobile.owl-theme
+              each image, index in list_images
+                - var large = resize(image.name, 1024);
+                - var alt = data.title + '-' + (index + 1);
+                .item
+                  img(src="/uploads/" + large, alt=alt, data-id=image.type_id)
+      .col-sm-5.detail.col-xs-12
+        .owl-carousel.owl-carousel-variant.owl-theme.visible-xs
+          each image in featured_images
+            .item.item-variant(data-id=image.id)
+              img(src=themeURI() + "/img/product_loading.gif" data-src="/uploads/" + resize(image.name, 240))
+        h1.title.main-title-product=data.title
+        p.price
+          each variant in variants
+            p.price-version=variant.title
+            span.main-price.main-price-product=money(variant.price)
+            //- span.price-compare.main-price-compare=money(variant.price_compare)
+        //- if data.display_discount
+        //-   p.discount.main-discount Tiết kiệm&nbsp;
+        //-     span=money(data.discount)
+        //-     |  (
+        //-     span=data.percent
+        //-     | )
+        //- else
+        //-   p.discount.main-discount.hidden
+        //- - var content = data.content.replace(/\n/g, '<br>');
+        //- .short-description.hidden-xs !{content}
+        ul.list-variant.clearfix.hidden-xs
+          each variant in variants
+            li.item-variant(data-id=variant.id)
+              img(src=themeURI() + "/img/product_loading.gif" data-src="/uploads/" + resize(variant.image, 240))
+        form.quantity.col-xs-4.pd-0
+          input.form-control(placeholder="Nhập số lượng", name="quantity", type="number", min = "1", value = "1")
+        if inInventory(data.id)!=0
+          .btn-order-product(data-id=data.id, data-variant="") ĐẶT HÀNG
+            br
+            span (Vui lòng chọn phiên bản)
+        else
+          .btn-order-product.out-of-stock ĐANG TẠM HẾT HÀNG
+  
+  //-     .clearfix.col-xs-12.product-bottom.row
+  //-       .col-md-8.col-sm-7.col-xs-12.description
+  //-         ul.nav.nav-tabs
+  //-           li.col-xs-6.col-sm-3.active
+  //-             a(data-toggle='tab', href='#nav-description') CHI TIẾT SẢN PHẨM
+  //-             .border
+  //-           li.col-xs-6.col-sm-3
+  //-             a(data-toggle='tab', href='#nav-specification') THÔNG SỐ SẢN PHẨM
+  //-             .border
+  //-         .tab-content
+  //-           #nav-description.tab-pane.fade.in.active
+  //-             section !{data.description}
+  //-           #nav-specification.tab-pane.fade
+  //-             section !{data.specification}
+  //-         //- section !{data['material']}
+  if count(related_products)
+    .related.col-xs-12
+      .container
+        .related-type
+          a SẢN PHẨM CÙNG LOẠI
+            .border.hidden-xs
+        .row.list-product-related
+          each product in related_products
+            if device == 'desktop'
+              .col20.col-xs-6
+                include snippet/product-loop
+            else
+              .col20.col-xs-6
+                include snippet/product-loop    
+  if count(product_seen)
+    .related.col-xs-12
+      .container
+        .related-type
+          a SẢN PHẨM ĐÃ XEM
+            .border.hidden-xs
+        .row.list-product-related
+          each product in product_seen
+            if device == 'desktop'
+              .col20.col-xs-6
+                include snippet/product-loop
+            else
+              .col20.col-xs-6
+                include snippet/product-loop

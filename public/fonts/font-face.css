@@ -1,0 +1,38 @@
+@font-face {
+  font-family: 'Montserrat';
+  src: url('Montserrat-Bold.eot');
+  src: url('Montserrat-Bold.woff2') format('woff2'),
+       url('Montserrat-Bold.woff') format('woff'),
+       url('Montserrat-Bold.ttf') format('truetype'),
+       url('Montserrat-Bold.svg#Montserrat-Bold') format('svg'),
+       url('Montserrat-Bold.eot?#iefix') format('embedded-opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('Montserrat-Light.eot');
+  src: url('Montserrat-Light.woff2') format('woff2'),
+       url('Montserrat-Light.woff') format('woff'),
+       url('Montserrat-Light.ttf') format('truetype'),
+       url('Montserrat-Light.svg#Montserrat-Light') format('svg'),
+       url('Montserrat-Light.eot?#iefix') format('embedded-opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('Montserrat.eot');
+  src: url('Montserrat.woff2') format('woff2'),
+       url('Montserrat.woff') format('woff'),
+       url('Montserrat.ttf') format('truetype'),
+       url('Montserrat.svg#Montserrat') format('svg'),
+       url('Montserrat.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+

@@ -1,0 +1,52 @@
+{% extends "layout.twig" %}
+
+{% block pre_include %}
+  <title>{{article.title}}</title>
+  {% if article.fb_image %}
+    {% set ogImage = article.fb_image %}
+  {% endif %}
+  {% if article.meta_description %}
+    {% set metaDescription = article.meta_description %}
+  {% endif %}
+  {% if article.meta_robots %}
+    {% set meta_robots = article.meta_robots %}
+  {% endif %}
+  {% set metaTitle = article.title %}
+{% endblock pre_include %}
+
+{% block content %}
+  <!-- BEGIN main-wrapper -->
+  <div class="main-wrapper main-wrapper2 container">
+      <div class="bg-main">
+          <section class="post-wrapper">
+              <h2 class="title-post">{{ article.title }}</h2>
+              <div class="content">
+                  {{ article.content|raw }}
+              </div>
+              <div class="fb-like" data-href="{{ currentUrl() }}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+              {% if related_articles|countArr %}
+                <section class="blog-wrapper">
+                  <h2 class="title-post">Bài viết liên quan</h2>
+                  {% for item in related_articles %}
+                    <div class="item">
+                        <div class="left col-sm-4 col-xs-12">
+                            <div class="box-img">
+                                <img src="/uploads/{{ item.image }}" alt="{{ item.title }}">
+                            </div>
+                        </div>
+                        <div class="right col-sm-8 col-xs-12">
+                            <h3 class="title-blog">{{ item.title }}</h3>
+                            <p class="desc">{{ item.description }}</p>
+                            <a class="view-more" href="/bai-viet/{{ item.handle }}">Xem thêm</a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                  {% endfor %}
+                </section>
+              {% endif %}
+          </section>
+      </div>
+  </div>
+  <!-- END main-wrapper -->
+  {% include "masterpage/related-blog.twig" %}
+{% endblock content %}

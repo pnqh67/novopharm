@@ -1,0 +1,47 @@
+{% extends "layout.twig" %}
+
+{% block pre_include %}
+  <title>Trang không tồn tại</title>
+{% endblock pre_include %}
+
+{% block content %}
+  <div class="container error-page text-center">
+    <div class="col-sm-12"><img src="{{staticURI()}}/img/404.png" alt="404.png"></div>
+    <div class="col-sm-12 back-to-home">
+      <button class="btn btn-default"><a href="{{ '' | fullUrl }}">Về trang chủ</a></button>
+    </div>
+  </div>
+{% endblock content %}
+
+
+<div class="row">
+  <div class="col-sm-2 control-label">Phiên bản</div>
+  <div class="col-sm-10">
+    <div class="list-variant clearfix">
+      <div class="variant-item clearfix">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="row">
+              <div class="col-sm-4 pd-right-5">
+                <input type="number" name="variant-price" placeholder="Giá" min="1" class="form-control"/>
+              </div>
+              <div class="col-sm-4 pd-left-5 pd-right-5">
+                <input type="number" name="variant-price-compare" placeholder="Giá so sánh" min="1" class="form-control"/>
+              </div>
+              <div class="col-sm-4 pd-left-5">
+                <input type="number" name="variant-inventory" placeholder="Tồn kho" min="1" class="form-control"/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 variant-images">
+            <div class="col-xs-12 list-image choose-image-variant">
+              <div class="col-xs-6 col-sm-2 add-image"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+extends ./layout.pug
+
+block pre-include
+    - var menu = 'dashboard';
+    title Mã giảm giá
+
+block post-include
+
+block content
+    section.content-header.clearfix
+        ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+            li
+                a Bảng điều khiển
+            li
+                a Thông báo lỗi
+    section.content.clearfix
+        .row.page-404
+            .col-xs-12.col-sm-4.text-right.text-xs-center
+                .number 403
+            .col-xs-12.col-sm-6
+                h3 Lỗi - bạn không có quyền hạn truy cập vào liên kết
+                p Quyền của bạn không đủ để truy cập liên kết.
+                    br
+                    | Vui lòng liên hệ với
+                    b
+                        |  quản trị viên cấp cao
+                    |  để nâng quyền hoặc thông báo cho quản trị viên.
+                    br
+                    | Xin cảm ơn.
+                a(href="/admin/dashboard")  quay lại trang chủ

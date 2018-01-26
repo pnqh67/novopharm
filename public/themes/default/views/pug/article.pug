@@ -1,0 +1,47 @@
+extends ./layout.pug
+
+block pre-include
+  title=article.title
+  if fb_image
+    - ogImage = fb_image
+  if article.meta_description
+    - metaDescription = article.meta_description
+  if article.meta_robots
+    - meta_robots = article.meta_robots;
+  - metaTitle = article.title
+  
+block content
+  .news-detail.container
+    .col-xs-12.left
+      .content.row
+        h1.title=article.title
+        p.description
+          b=article.description
+        section !{article.content}
+        .author=article.author
+      - var relatedArticles = getRelatedArticle(article.id)
+      if count(relatedArticles)
+        .relative-news.hidden-xs.row 
+          .title 
+            a BÀI VIẾT LIÊN QUAN
+              .border
+          each item in relatedArticles
+            .item
+              a.col-sm-2.avatar(href='/article/' + item.handle, style="background:url('/uploads/"+resize(item.image, 240)+"')" ) 
+              .col-sm-10
+                .news-title 
+                  a(href='/article/' + item.handle)=item.title
+                .news-content=item.description
+      - var hotArticles = getHotArticle(article.id)
+      if count(hotArticles)
+        .relative-news.hidden-xs.row 
+          .title 
+            a BÀI VIẾT NỔI BẬT
+              .border
+          each item in hotArticles
+            .item
+              a.col-sm-2.avatar(href='/article/' + item.handle, style="background:url('/uploads/"+resize(item.image, 240)+"')" ) 
+              .col-sm-10
+                .news-title 
+                  a(href='/article/' + item.handle)=item.title
+                .news-content=item.description

@@ -1,0 +1,74 @@
+extends ./layout.pug
+block pre-include
+  - var menu = 'product'
+  - var childMenu = 'product_buy_together'
+  title Thêm mới sản phẩm mua kèm
+
+block post-include
+  script(src=staticURI() + '/js/admin/product-buy-together.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Sản phẩm
+      li
+        a Sản phẩm mua kèm
+      li
+        a Thêm mới sản phẩm mua kèm
+
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      li
+        a.btn.btn-admin.btn-create
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Lưu lại
+  section.content
+    .row
+      .col-sm-9.col-xs-12.box-left
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-6.title THÔNG TIN
+            .box-body
+              .form-group
+                .col-sm-2.control-label Sản phẩm chính
+                  strong.required *
+                .col-sm-10
+                  select.form-control(name='product')
+                    option(value='0') Mời chọn sản phẩm chính...
+                    each product in products
+                      if (product.id == productId)
+                        option(value=product.id selected)=product.title
+                      else
+                        option(value=product.id)=product.title
+              .form-group
+                .col-sm-2.control-label Sản phẩm mua kèm
+                  strong.required *
+                .col-sm-10
+                  select.form-control(name='product_buy_together')
+                    option(value='0') Mời chọn sản phẩm mua kèm...
+                    each product in products
+                      option(value=product.id)=product.title
+              .form-group
+                .col-sm-2.control-label Giá
+                  strong.required *
+                .col-md-5
+                  .input-group
+                    span.input-group-addon
+                      label(style="color: grey; font-weight: normal") Giá bán
+                    input.form-control(name='price_sale')
+                .col-md-5
+                  .input-group
+                    span.input-group-addon
+                      label(style="color: grey; font-weight: normal") Khuyến mãi (%)
+                    input.form-control(name='promotion')
+      .col-sm-3.col-xs-12.box-right
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-12.title TRẠNG THÁI
+            .box-body
+              select.form-control(name="status")
+                option(value="active") Hiển thị
+                option(value="inactive") Ẩn

@@ -1,0 +1,165 @@
+<section>
+  <div class="container">
+    <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#home">HOME</a></li>
+      <li><a data-toggle="tab" href="#menu1">SẢN PHẨM</a></li>
+      <li><a data-toggle="tab" href="#menu3">KINH NGHIỆM</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="home" class="tab-pane fade in active">
+        <h3>HOME</h3>
+        <div class="container">
+          <div class="box" data-name="novo">
+            <div class="box-body">
+              <div class="form-horizontal">
+                <div class="col-xs-12">
+                  <p>Thông tin chung</p>
+                  <div class="box-body">
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Địa chỉ</label>
+                      <div class="col-sm-10"><input class="form-control" name="address"  placeholder="78/1 Phan Đình Phùng, Phường Tân Thành, Quận Tân Phú, TP HCM">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Email</label>
+                      <div class="col-sm-10"><input class="form-control" name="email" placeholder="hi@eye-solution.vn"></div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Điện thoại</label>
+                      <div class="col-sm-10"><input class="form-control" name="hotline_1" placeholder="0128000980"></div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Facebook</label>
+                      <div class="col-sm-10"><input class="form-control" name="facebook"
+                       placeholder="https://facebook.com/eye-solu">
+                     </div>
+                   </div>
+                   <div class="form-group">
+                    <label class="col-sm-2 control-label">G+</label>
+                    <div class="col-sm-10"><input class="form-control" name="google" placeholder="https://plus.google.com"></div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Tổng đài</label>
+                    <div class="col-sm-10"><input class="form-control" name="hotline_2" placeholder="089000821"></div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Hình đại diện</label>
+                    <form class="col-sm-10 form-upload-image">
+                      <img src="/static/img/default_image.png">
+                      <input class="upload form-control" type="file" name="upload[]">
+                      <input type="hidden" name="logo">
+                    </form>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Favicon</label>
+                    <form class="col-sm-10 form-upload-image">
+                      <img src="/static/img/default_image.png">
+                      <input class="upload form-control" type="file" name="upload[]">
+                      <input type="hidden" name="favicon">
+                    </form>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Logo Chân Trang </label>
+                    <form class="col-sm-10 form-upload-image">
+                      <img src="/static/img/default_image.png">
+                      <input class="upload form-control" type="file" name="upload[]">
+                      <input type="hidden" name="logo_footer">
+                    </form>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Giá  1 đơn vị (đồng/sản
+                    phẩm)</label>
+                    <div class="col-sm-10"><input class="form-control" name="product_price"
+                      type="number" value="1"></div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">3 bài viết trên trang chủ</label>
+                      <div class="col-sm-10">
+                        <select style="margin-bottom: 5px" name="index_blogs"
+                        multiple="multiple" class="form-control ajax-source"
+                        data-type="article"></select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="menu1" class="tab-pane fade">
+        <h3>Sản phẩm</h3>
+        <div class="container">
+          <div class="box" data-name="product">
+            <div class="box-body">
+              <div class="form-horizontal">
+                <div class="col-xs-12">
+                  <p>Chi tiết về sản phẩm</p>
+                  <div class="box-body">
+                    {% set titles = ["Thành phần", "Công dụng", "Đối tượng và liều dùng"] %}
+                    {% for i in 1..3 %}
+                      <div class="form-group">
+                        <label class="col-sm-2 control-label">Tiêu đề {{ i }}</label>
+                        <div class="col-sm-10">
+                          <input class="form-control" name="product_title_{{ i }}" placeholder="{{ titles[i - 1] }}">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-2 control-label">Nội dung {{ i }}</label>
+                        <div class="col-sm-10">
+                          <textarea id="product_content_{{ i }}" name="product_content_{{ i }}" class="form-control tinymce" placeholder=""></textarea>
+                        </div>
+                      </div>
+                    {% endfor %}
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Hình đại diện</label>
+                      <form class="col-sm-10 form-upload-image">
+                        <img src="/static/img/default.jpg">
+                        <input class="upload form-control" type="file" name="upload[]">
+                        <input type="hidden" name="product_image">
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="menu3" class="tab-pane fade">
+        <h3>Kinh nghiệm</h3>
+        <div class="container">
+          <div class="box" data-name="experience">
+            <div class="box-body">
+              <div class="form-horizontal">
+                <div class="col-xs-12">
+                  <p>Phần chia sẻ kinh nghiệm</p>
+                  <div class="box-body">
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Tiêu đề</label>
+                      <div class="col-sm-10"><input class="form-control" name="exp_title" placeholder="CHIA SẺ KINH NGHIỆM"></div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Mô tả</label>
+                      <div class="col-sm-10">
+                        <textarea name="exp_description" class="form-control" placeholder=""></textarea>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Video(link Youtube)</label>
+                      <div class="col-sm-10"><input class="form-control" name="exp_link" placeholder="https://youtube.com/vid-128980">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

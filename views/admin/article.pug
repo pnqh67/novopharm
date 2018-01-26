@@ -1,0 +1,66 @@
+extends ./layout.pug
+block pre-include
+  - var menu = 'article'
+  - var childMenu = 'list'
+  title Bài viết
+
+block post-include
+  script(src=staticURI() + '/js/admin/article.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Bài viết
+      li
+        a Danh sách
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      span.middle-inline-block
+      li
+        a.btn.btn-admin(href="/admin/article/create") Thêm mới
+  section.content
+    .box.box-table
+      .row.box-header
+        h3.box-title DANH SÁCH
+      .box-body
+        table.table.table-bordered.table-striped.nowrap(cellspacing="0" width="100%")
+          .action-box.hidden
+            .dropdown
+              button.btn.btn-danger.dropdown-toggle(type="button" data-toggle="dropdown")
+                i.fa.fa-share
+                |  Chọn thao tác (đang chọn
+                span.num-select
+                |  bài viết)
+                span.caret
+              ul.dropdown-menu
+                li
+                  a.status-active(data-value='active') Ẩn
+                li
+                  a.status-inactive(data-value='inactive') Hiện
+                li
+                  a.status-delete(data-value='delete') Xóa
+          thead
+            tr
+              th.text-center
+                input.select-all(type="checkbox" style="margin-left: 10px")
+              th Mã
+              th Tiêu đề
+              th Lượt xem
+              th Trạng thái
+          tbody
+            each item in data
+              tr
+                td.text-center
+                  input.checkboxes(type="checkbox" value=item.id)
+                td
+                  a(href="/admin/article/" + item.id target="_blank")=item.id
+                td
+                  a(href="/admin/article/" + item.id target="_blank")=item.title
+                td=item.view
+                td
+                  case item.status
+                    when 'active'
+                      label.label.label-info Đang hiện
+                    when 'inactive'
+                      label.label.label-warning Đang ẩn
+

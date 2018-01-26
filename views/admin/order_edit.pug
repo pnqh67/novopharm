@@ -1,0 +1,142 @@
+extends ./layout.pug
+
+block pre-include
+  title Đơn hàng | 
+    =order.id
+  - var menu = 'order';
+  - var childMenu = 'all';
+block post-include
+  script(src=staticURI() + '/js/admin/order.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a(href="/admin/order") Đơn hàng
+      li
+        a Chi tiết đơn hàng
+      li
+        a=order.id
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      li
+        a.btn.btn-admin.btn-update-order(data-id=order.id)
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Cập nhật
+  section.content
+    .row
+      .col-sm-9.col-xs-12.box-left
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-12.title THÔNG TIN ĐƠN HÀNG
+            .box-body
+              .tab-content
+                table.table.table-bordered
+                  thead
+                    tr
+                      th Hình ảnh
+                      th Tên sản phẩm
+                      th Số lượng
+                      th Tổng cộng
+                  tbody
+                    each item in cart
+                      tr
+                        td
+                          img(src=staticURI() + "/img/default_image.png")
+                        td
+                          a() Sản phẩm chính
+                          p=item.variant_title
+                        td=item.quantity
+                        td=money(order.total)
+                      tr
+                        td.text-right(colspan="3") Tạm tính
+                        td=money(order.subtotal)
+                      tr
+                        td.text-right(colspan="3") Giảm giá
+                        td=money(order.discount)
+                      tr
+                        td.text-right(colspan="3") Phí vận chuyển
+                        td=money(order.shipping_price)
+                      tr
+                        td.text-right(colspan="3")
+                          b THÀNH TIỀN
+                        td
+                          b=money(order.total)
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-12.title THÔNG TIN KHÁCH HÀNG
+            .box-body
+              .tab-content
+                .form-group
+                  .col-sm-2.text-right Họ tên:
+                  .col-sm-10
+                    label=customer.name
+                .form-group
+                  .col-sm-2.text-right Email:
+                  .col-sm-10
+                    label=customer.email
+                .form-group
+                  .col-sm-2.text-right Số điện thoại:
+                  .col-sm-10
+                    label=customer.phone
+                .form-group
+                  .col-sm-2.text-right Địa chỉ:
+                  .col-sm-10
+                    label=customer.address
+                if order.notes
+                  .form-group
+                    .col-sm-2.text-right.red Ghi chú:
+                    .col-sm-10
+                      label=order.notes
+      .col-sm-3.col-xs-12.box-right
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-12.title TRẠNG THÁI
+            .box-body
+              .col-xs-12
+                .form-group
+                  .text-title Phương thức thanh toán: &nbsp;
+                    label.label.label-info=uppercase(order.payment_method)
+                .form-group
+                  .text-title Trạng thái đơn hàng:
+                  select.form-control(name="order_status", data-value=order.order_status)
+                    option(value="new") Mới
+                    option(value="confirm") Xác nhận
+                    option(value="done") Hoàn tất
+                    option(value="cancel") Hủy
+                    option(value="return") Trả lại
+                - var hide_reason = 'hidden';
+                if (order.order_status == 'cancel' || order.order_status == 'return')
+                  - var hide_reason = '';
+                .form-group.reason_cancel(class=hide_reason)
+                  .text-title Lý do trả/hủy đơn hàng:
+                  textarea.form-control(name="reason_cancel", placeholder="Nhập lý do trả/hủy đơn hàng")=order.reason_cancel
+                .form-group
+                  .text-title Trạng thái thanh toán:
+                  select.form-control(name="payment_status", data-value=order.payment_status)
+                    option(value="0") Chưa thanh toán
+                    option(value="1") Đã thanh toán
+                .form-group
+                  .text-title Trạng thái giao hàng:
+                  select.form-control(name="shipping_status", data-value=order.shipping_status)
+                    option(value="0") Chưa giao hàng
+                    option(value="1") Đang giao hàng
+                    option(value="2") Đã giao hàng
+                - var lastHistory = getLastHistory('order', order.id);
+                .form-group.history
+                  .row
+                    .col-xs-6 Ngày tạo:
+                    .col-xs-6
+                      b=datetime(order.created_at)
+                  if lastHistory
+                    .row
+                      .col-xs-6 Cập nhật sau cùng:
+                      .col-xs-6
+                        b=datetime(lastHistory.created_at)
+                    .row
+                      .col-xs-6 Người cập nhật sau cùng:
+                      .col-xs-6
+                        b=lastHistory.user_name

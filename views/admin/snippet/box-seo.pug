@@ -1,0 +1,89 @@
+.box
+  .form-horizontal
+    .box-title.clearfix
+      .col-xs-6.title TỐI ƯU SEO
+      ul.nav.nav-tabs.nav-tabs-seo.col-xs-6
+        li.dropdown.active
+          a.dropdown-toggle(data-toggle='dropdown', href='#')='Google  '
+            span.caret
+          ul.dropdown-menu
+            li
+              a(data-toggle='tab', href='#tab-seo-vi') Tiếng Việt
+            li
+              a(data-toggle='tab', href='#tab-seo-en') Tiếng Anh
+        li.dropdown
+          a.dropdown-toggle(data-toggle='dropdown')='Facebook  '
+            span.caret
+          ul.dropdown-menu(role='menu')
+            li
+              a(data-toggle='tab', href='#tab-facebook-vi') Tiếng Việt
+            li
+              a(data-toggle='tab', href='#tab-facebook-en') Tiếng Anh
+    .box-body
+      .tab-content
+        #tab-seo-vi.tab-pane.fade.in.active
+          .form-group
+            .col-sm-2.control-label Tiêu đề trang
+            .col-sm-10
+              input.form-control(name="g_meta_title", value=seo.g_meta_title, placeholder="Tiêu đề trang")
+          .form-group
+            .col-sm-2.control-label Mô tả trang
+            .col-sm-10
+              textarea.form-control(name="g_meta_description", placeholder="Mô tả trang")=seo.g_meta_description
+          .form-group
+            .col-sm-2.control-label Từ khóa
+            .col-sm-10
+              textarea.form-control(name="g_meta_keyword", placeholder="Từ khóa")=seo.g_meta_keyword
+          .form-group
+            .col-sm-2.control-label Meta robots
+            .col-sm-10
+              select.form-control(name="g_meta_robots", data-value=seo.g_meta_robots, value=seo.g_meta_robots)
+                option(value="index, follow") Index, Follow
+                option(value="noindex, follow") No Index, Follow
+                option(value="index, nofollow") Index, No Follow
+                option(value="noindex, nofollow") No Index, No Follow
+        #tab-seo-en.tab-pane.fade
+          .form-group
+            .col-sm-2.control-label Tiêu đề trang
+            .col-sm-10
+              input.form-control(name="g_meta_title_en", value=seo.g_meta_title_en, placeholder="Title")
+          .form-group
+            .col-sm-2.control-label Mô tả trang
+            .col-sm-10
+              textarea.form-control(name="g_meta_description_en", placeholder="Description")=seo.g_meta_description_en
+          .form-group
+            .col-sm-2.control-label Từ khóa
+            .col-sm-10
+              textarea.form-control(name="g_meta_keyword_en", placeholder="Keyword")=seo.g_meta_keyword_en
+        #tab-facebook-vi.tab-pane.fade
+          .form-group
+            .col-sm-2.control-label Tiêu đề trang
+            .col-sm-10
+              input.form-control(name="f_meta_title", value=seo.f_meta_title, placeholder="Tiêu đề")
+          .form-group
+            .col-sm-2.control-label Mô tả trang
+            .col-sm-10
+              textarea.form-control(name="f_meta_description", placeholder="Mô tả")=seo.f_meta_description
+          .form-group
+            .col-sm-2.control-label Hình đại diện
+            .col-sm-10
+              .box-body
+                if seo.f_image
+                  .item-choose-image(data-default=staticURI() + "/img/default.jpg")
+                    img(src='/uploads/' + resize(seo.f_image, 480))
+                    span.remove-image
+                      i.fa.fa-times
+                    input.value(type="hidden", name="f_image", value=seo.f_image)
+                else
+                  .item-choose-image(data-default=staticURI() + "/img/default.jpg")
+                    img(src=staticURI() + "/img/default.jpg")
+                    input.value(type="hidden", name="f_image")
+        #tab-facebook-en.tab-pane.fade
+          .form-group
+            .col-sm-2.control-label Tiêu đề trang
+            .col-sm-10
+              input.form-control(name="f_meta_title_en", value=seo.f_meta_title_en, placeholder="Title")
+          .form-group
+            .col-sm-2.control-label Mô tả trang
+            .col-sm-10
+              textarea.form-control(name="f_meta_description_en", placeholder="Description")=seo.f_meta_description_en

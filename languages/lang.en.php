@@ -1,0 +1,22 @@
+<?php
+  $lang = array();
+  $lang['SEE_ALL_PRODUCTS'] = 'See all products';
+  $lang['PAGE_NOT_FOUND'] = 'Page Not Found';
+  $lang['BACK_TO_HOME'] = 'Back To Homepage';
+  $lang['PRODUCT_HANDLE'] = 'product';
+  $lang['ALL_COLLECTIONS'] = 'collections';
+  $lang['ALL_PRODUCTS'] = 'All Products';
+  $lang['CONTACT_SITE'] = 'Contact Us';
+  $lang['CONTACT_US'] = 'Contact Us';
+  $lang['FULLNAME'] = 'Fullname';
+  $lang['EMAIL'] = 'Email';
+  $lang['MESSAGE'] = 'Message';
+  $lang['YOUR_FULLNAME'] = 'Your Fullname';
+  $lang['YOUR_EMAIL'] = 'Your Email';
+  $lang['YOUR_MESSAGE'] = 'Your Message';
+  $lang['SUBMIT'] = 'Submit';
+  $lang['ALL_RIGHTS_RESERVED'] = 'All rights reserved';
+  $lang['PRIVACY_POLICY'] = 'Privacy Policy';
+  $lang['SUBSCRIBE'] = 'Subscribe to get best promotion!';
+  $lang['SUBSCRIBE_BTN'] = 'Subscribe';
+  $lang['HOMEPAGE'] = 'Home';

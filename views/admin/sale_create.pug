@@ -1,0 +1,107 @@
+extends ./layout.pug
+block pre-include
+  - var menu = 'coupon'
+  - var childMenu = 'sale'
+  title Tạo chương trình khuyến mãi
+
+block post-include
+  script(src=staticURI() + '/js/admin/sale.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Chương trình khuyến mãi
+      li
+        a Tạo mới
+
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      li
+        a.btn.btn-admin.btn-create-update
+          i.fa.fa-floppy-o
+          i.fa.fa-circle-o-notch.fa-spin
+          | Lưu lại
+  section.content(style="min-height:1000px")
+    .row
+      .col-sm-9.col-xs-12.box-left
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-6.title THÔNG TIN
+              ul.nav.nav-tabs.nav-tabs-lang.col-xs-6
+                li.active
+                  a(data-toggle='tab', href='#tab-vi') Tiếng Việt
+                li
+                  a(data-toggle='tab', href='#tab-en') Tiếng Anh
+            .box-body
+              .tab-content
+                #tab-vi.tab-pane.fade.in.active
+                  .form-group
+                    .col-sm-2.control-label Tiêu đề
+                      strong.required  *
+                    .col-sm-10
+                      input.form-control(name="title", placeholder="Tiêu đề")
+                  .form-group
+                    .col-sm-2.control-label Mô tả
+                    .col-sm-10
+                      textarea.form-control(name='description')#description
+                #tab-en.tab-pane.fade.in
+                  .form-group
+                    .col-sm-2.control-label Tiêu đề
+                    .col-sm-10
+                      input.form-control(name="title_en", placeholder="Tiêu đề")
+                  .form-group
+                    .col-sm-2.control-label Mô tả
+                    .col-sm-10
+                      textarea.form-control(name='description_en')#description_en
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-6.product.title DANH SÁCH SẢN PHẨM
+            .box-body
+              .form-group
+                .col-sm-12
+                  .list-product.clearfix
+                    .list-product-content
+                    .row
+                      .col-xs-9
+                      .col-xs-3
+                        button.btn.btn-primary.btn-add-product Thêm &ensp;
+                          i.fa.fa-plus
+      .col-sm-3.col-xs-12.box-right
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-12.title THỂ LOẠI & GIÁ TRỊ
+            .box-body
+              .col-xs-12
+                .form-group
+                  .text-title Thể loại
+                    strong.required *
+                  select.form-control(name="type")
+                    option(value="value") Giảm theo đơn giá
+                    option(value="percent") Giảm theo phần trăm
+                .form-group
+                  .text-title Giá trị
+                    strong.required *
+                  input.form-control(type="number", name="value" placeholder="Giá trị")
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-12.title THỜI GIAN
+            .box-body
+              .col-sm-12
+                .form-group
+                  .text-title Ngày bắt đầu
+                  input.form-control.datepicker(name='start_date', placeholder="dd-mm-yyyy")
+                .form-group
+                  .text-title Ngày kết thúc
+                  input.form-control.datepicker(name='end_date', placeholder="dd-mm-yyyy")
+        .box
+          .form-horizontal
+            .box-title.clearfix
+              .col-xs-12.title TRẠNG THÁI
+            .box-body
+                select.form-control(name="status")
+                  option(value="active") Hiển thị
+                  option(value="inactive") Ẩn

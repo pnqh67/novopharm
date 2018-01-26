@@ -1,0 +1,146 @@
+extends ./layout.pug
+block pre-include
+  title Danh sách sản phẩm
+  - var menu = 'product';
+  - var childMenu = 'list';
+
+block post-include
+  script(src=staticURI() +'/js/admin/product.js')
+
+block content
+  section.content-header.clearfix
+    ol.breadcrumb.col-md-8.col-sm-7.hidden-xs
+      li
+        a Sản phẩm
+      li
+        a(href='/admin/product') Danh sách sản phẩm
+    ol.button-right.col-md-4.col-sm-5.col-xs-12
+      li
+        a.btn.btn-admin(href="/admin/product/create") Tạo sản phẩm
+
+  section.content
+    .box.box-table
+      .box-header
+        h3.box-title DANH SÁCH
+      .box-body.clearfix
+        table.table.table-condensed.table-bordered.table-striped.display.nowrap.table-product(cellspacing="0" width="100%")
+          include snippet/action-box
+          thead
+            tr
+              th.text-center
+                input.select-all(type="checkbox")
+              th Mã
+              th Hình
+              th Tên sản phẩm
+              th Tồn kho
+              th Lượt xem
+              th Trạng thái
+          tbody
+            each item in data
+              tr
+                td.text-center
+                  input.checkboxes(type="checkbox" value=item.id)
+                td=item.id
+                td.image
+                  if item.featured_image
+                    img(src=staticURI() + "/img/no-image.png", data-src="/uploads/" + resize(item.featured_image, 240))
+                  else
+                    img(src=staticURI() + "/img/no-image.png")
+                td
+                  a(href="/admin/product/" + item.id target="_blank")=item.title
+                td=item.stock
+                td=item.view
+                td
+                  case item.status
+                    when 'active'
+                      label.label.label-info Đang hiện
+                    when 'inactive'
+                      label.label.label-warning Đang ẩn
+
+    #modal-add-tag.modal.fade(role='dialog')
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type='button', data-dismiss='modal') ×
+                    .modal-title
+                        h4.modal-title Thêm mới tags cho
+                            span.num-select
+                            | sản phẩm
+                .modal-body
+                    .form-horizontal
+                        .box-body
+                            input(type="text" data-role="tagsinput", name="tags")
+                            .list-tags
+                                each item in tags
+                                    span.tag-name(data-id=item.id)=item.name
+                .modal-footer
+                    button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+                    button.btn.btn-primary.btn-add-tag Thêm tags
+    #modal-remove-tag.modal.fade(role='dialog')
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type='button', data-dismiss='modal') ×
+                    .modal-title
+                        h4.modal-title Xóa tags cho
+                            span.num-select
+                            | sản phẩm
+                .modal-body
+                    .form-horizontal
+                        .box-body
+                            input(type="text" data-role="tagsinput", name="tags")
+                            .list-tags
+                                each item in tags
+                                    span.tag-name(data-id=item.id)=item.name
+                .modal-footer
+                    button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+                    button.btn.btn-danger.btn-remove-tag Xóa tags
+    #modal-add-collection.modal.fade(role='dialog')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal') ×
+            .modal-title
+              h4.modal-title Thêm mới danh mục cho
+                span.num-select
+                | sản phẩm
+          .modal-body
+            each item in collections
+              if item.parent_id == -1
+                .row
+                  input(type='checkbox' value=item.id id='add' + item.id)
+                  label(for='add' + item.id style="padding-left:" + 15 + "px")=item.title
+              - var lv = 15
+              +listCollection(item.subcollection, 'add', lv + 15)
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+            button.btn.btn-primary.btn-add-collection Thêm danh mục
+    #modal-remove-collection.modal.fade(role='dialog')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal') ×
+            .modal-title
+              h4.modal-title Xóa danh mục cho
+                span.num-select
+                | sản phẩm
+          .modal-body
+            each item in collections
+              if item.parent_id == -1
+                .row
+                  input(type='checkbox' value=item.id id='remove' + item.id)
+                  label(for='remove' + item.id style="padding-left:" + 15 + "px")=item.title
+              - var lv = 15
+              +listCollection(item.subcollection, 'remove', lv + 15)
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') Hủy
+            button.btn.btn-danger.btn-remove-collection Xóa danh mục
+
+mixin listCollection(childs, action, lv)
+  if (childs.subcollection != 0)
+    each child in childs
+      .row
+        input(type='checkbox' value=child.id id=action + child.id)
+        i.fa.fa-level-down(style="padding-left:" + lv + "px")
+        label(for=action + child.id style="padding-left:" + 5 + "px")=child.title
+      +listCollection(child.subcollection, action, lv + 15)
